@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SmartPlot - My Listings</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family: Arial, sans-serif;
+
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at 15% 15%,
+                    rgba(34, 197, 94, 0.14),
+                    transparent 25%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(34, 211, 238, 0.14),
+                    transparent 25%
+                ),
+                linear-gradient(
+                    135deg,
+                    #020617,
+                    #0f172a,
+                    #12324a,
+                    #064e3b
+                );
+
+            padding-bottom: 40px;
+        }
+
+
+        .navbar {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 20px 6%;
+
+            background:
+                rgba(255,255,255,0.06);
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.10);
+        }
+
+
+        .logo {
+
+            font-size: 28px;
+
+            font-weight: bold;
+        }
+
+
+        .logo span {
+
+            color: #4ade80;
+        }
+
+
+        .nav-links {
+
+            display: flex;
+
+            gap: 10px;
+
+            align-items: center;
+        }
+
+
+        .nav-btn {
+
+            text-decoration: none;
+
+            color: #cbd5e1;
+
+            padding: 9px 14px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(255,255,255,0.07);
+
+            border:
+                1px solid rgba(255,255,255,0.14);
+
+            font-size: 13px;
+        }
+
+
+        .container {
+
+            max-width: 1150px;
+
+            margin: 40px auto;
+
+            padding: 0 20px;
+        }
+
+
+        .heading {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 30px;
+
+            gap: 20px;
+        }
+
+
+        .heading h1 {
+
+            font-size: 34px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .heading p {
+
+            color: #94a3b8;
+
+            font-size: 14px;
+        }
+
+
+        .add-btn {
+
+            text-decoration: none;
+
+            color: white;
+
+            padding: 12px 18px;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #22c55e,
+                    #10b981
+                );
+
+            font-weight: bold;
+
+            white-space: nowrap;
+        }
+
+
+        .plot-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+
+        .plot-card {
+
+            padding: 22px;
+
+            border-radius: 18px;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            border:
+                1px solid rgba(255,255,255,0.14);
+
+            backdrop-filter:
+                blur(14px);
+        }
+
+
+        .plot-id {
+
+            color: #67e8f9;
+
+            font-size: 12px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .plot-card h2 {
+
+            font-size: 21px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .location {
+
+            color: #cbd5e1;
+
+            margin-bottom: 18px;
+
+            font-size: 14px;
+        }
+
+
+        .details {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 10px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .detail {
+
+            padding: 10px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(0,0,0,0.18);
+        }
+
+
+        .detail-label {
+
+            color: #94a3b8;
+
+            font-size: 11px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .detail-value {
+
+            font-weight: bold;
+
+            font-size: 14px;
+        }
+
+
+        .price {
+
+            font-size: 23px;
+
+            font-weight: bold;
+
+            color: #86efac;
+
+            margin-bottom: 5px;
+        }
+
+
+        .price-per {
+
+            color: #67e8f9;
+
+            font-size: 13px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .status {
+
+            display: inline-block;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            text-transform: uppercase;
+
+            margin-bottom: 15px;
+        }
+
+
+        .available {
+
+            background:
+                rgba(34,197,94,0.14);
+
+            color: #86efac;
+
+            border:
+                1px solid rgba(34,197,94,0.25);
+        }
+
+
+        .reserved {
+
+            background:
+                rgba(250,204,21,0.12);
+
+            color: #fde68a;
+
+            border:
+                1px solid rgba(250,204,21,0.25);
+        }
+
+
+        .sold {
+
+            background:
+                rgba(239,68,68,0.13);
+
+            color: #fca5a5;
+
+            border:
+                1px solid rgba(239,68,68,0.25);
+        }
+
+
+        .actions {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 8px;
+        }
+
+
+        .action {
+
+            text-decoration: none;
+
+            text-align: center;
+
+            padding: 10px 8px;
+
+            border-radius: 8px;
+
+            color: white;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            border:
+                1px solid rgba(255,255,255,0.12);
+
+            font-size: 12px;
+        }
+
+
+        .action:hover {
+
+            background:
+                rgba(255,255,255,0.14);
+        }
+
+
+        .delete {
+
+            color: #fca5a5;
+
+            border-color:
+                rgba(239,68,68,0.20);
+        }
+
+
+        .empty {
+
+            padding: 60px 20px;
+
+            text-align: center;
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,255,255,0.07);
+
+            border:
+                1px solid rgba(255,255,255,0.12);
+        }
+
+
+        .empty-icon {
+
+            font-size: 50px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .empty h2 {
+
+            margin-bottom: 10px;
+        }
+
+
+        .empty p {
+
+            color: #94a3b8;
+
+            margin-bottom: 20px;
+        }
+
+
+        @media (max-width: 900px) {
+
+            .plot-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .navbar {
+
+                padding: 17px 5%;
+            }
+
+
+            .logo {
+
+                font-size: 23px;
+            }
+
+
+            .nav-links {
+
+                gap: 5px;
+            }
+
+
+            .heading {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+
+            .heading h1 {
+
+                font-size: 28px;
+            }
+
+
+            .plot-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <nav class="navbar">
+
+        <div class="logo">
+
+            🏡 Smart<span>Plot</span>
+
+        </div>
+
+
+        <div class="nav-links">
+
+            <a
+                href="/dashboard"
+                class="nav-btn"
+            >
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="/logout"
+                class="nav-btn"
+            >
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <main class="container">
+
+
+        <div class="heading">
+
+            <div>
+
+                <h1>
+                    My Listings
+                </h1>
+
+                <p>
+                    Manage the plots you have posted on SmartPlot.
+                </p>
+
+            </div>
+
+
+            <a
+                href="/add-plot"
+                class="add-btn"
+            >
+
+                + Add New Plot
+
+            </a>
+
+        </div>
+
+
+        {% if plots %}
+
+
+            <div class="plot-grid">
+
+
+                {% for plot in plots %}
+
+
+                    <div class="plot-card">
+
+
+                        <div class="plot-id">
+
+                            PLOT ID: SP{{ "%04d"|format(plot["id"]) }}
+
+                        </div>
+
+
+                        <h2>
+
+                            {{ plot["title"] }}
+
+                        </h2>
+
+
+                        <div class="location">
+
+                            📍 {{ plot["location"] }}
+
+                        </div>
+
+
+                        <div class="price">
+
+                            ₹{{ "{:,.0f}".format(plot["price"]) }}
+
+                        </div>
+
+
+                        <div class="price-per">
+
+                            ₹{{ "{:,.2f}".format(plot["price"] / plot["area"]) }}
+                            / sq.ft
+
+                        </div>
+
+
+                        <div class="details">
+
+
+                            <div class="detail">
+
+                                <div class="detail-label">
+                                    AREA
+                                </div>
+
+                                <div class="detail-value">
+
+                                    {{ "{:,.0f}".format(plot["area"]) }}
+                                    sq.ft
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <div class="detail-label">
+                                    ROAD
+                                </div>
+
+                                <div class="detail-value">
+
+                                    {{ plot["road_width"] }}
+                                    ft
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <div class="detail-label">
+                                    TYPE
+                                </div>
+
+                                <div class="detail-value">
+
+                                    {{ plot["property_type"] }}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <div class="detail-label">
+                                    FACING
+                                </div>
+
+                                <div class="detail-value">
+
+                                    {{ plot["facing"] }}
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="status {{ plot['status'] }}">
+
+                            {{ plot["status"] }}
+
+                        </div>
+
+
+                        <div class="actions">
+
+
+                            <a
+                                href="/update-plot-status/{{ plot['id'] }}/available"
+                                class="action"
+                            >
+
+                                Available
+
+                            </a>
+
+
+                            <a
+                                href="/update-plot-status/{{ plot['id'] }}/reserved"
+                                class="action"
+                            >
+
+                                Reserved
+
+                            </a>
+
+
+                            <a
+                                href="/update-plot-status/{{ plot['id'] }}/sold"
+                                class="action"
+                            >
+
+                                Mark Sold
+
+                            </a>
+
+
+                            <a
+                                href="/delete-plot/{{ plot['id'] }}"
+                                class="action delete"
+                                onclick="return confirm('Are you sure you want to delete this listing?');"
+                            >
+
+                                Delete
+
+                            </a>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🏡
+                </div>
+
+                <h2>
+                    No plots listed yet
+                </h2>
+
+                <p>
+                    Add your first plot and make it
+                    visible to SmartPlot buyers.
+                </p>
+
+
+                <a
+                    href="/add-plot"
+                    class="add-btn"
+                >
+
+                    + List Your First Plot
+
+                </a>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </main>
+
+
+</body>
+
+</html>

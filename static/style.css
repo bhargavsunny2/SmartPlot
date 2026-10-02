@@ -1,0 +1,322 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    color: #1f2937;
+
+    background:
+        linear-gradient(
+            rgba(248, 250, 252, 0.90),
+            rgba(239, 246, 255, 0.94)
+        ),
+        url("https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=2000&q=80");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    width: 100%;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: 800;
+    color: #2563eb;
+}
+
+.logout-btn {
+    text-decoration: none;
+    color: #ffffff;
+    background: #ef4444;
+
+    padding: 10px 20px;
+    border-radius: 10px;
+
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.logout-btn:hover {
+    background: #dc2626;
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.dashboard-container {
+    width: 86%;
+    max-width: 1250px;
+
+    margin: 45px auto;
+}
+
+.dashboard-container h1 {
+    font-size: 38px;
+    color: #111827;
+
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #64748b;
+    font-size: 17px;
+    margin-bottom: 30px;
+}
+
+
+/* =========================
+   ACCOUNT CARD
+========================= */
+
+.account-card {
+    background: rgba(255, 255, 255, 0.94);
+
+    border-radius: 20px;
+
+    padding: 28px;
+
+    margin-bottom: 35px;
+
+    box-shadow:
+        0 12px 35px rgba(15, 23, 42, 0.10);
+
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.account-card h2 {
+    margin-bottom: 22px;
+    color: #111827;
+}
+
+.account-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 20px;
+}
+
+.account-grid div {
+    background: #f8fafc;
+
+    padding: 18px;
+
+    border-radius: 14px;
+
+    border: 1px solid #e5e7eb;
+}
+
+.account-grid span {
+    display: block;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    margin-bottom: 8px;
+}
+
+.account-grid strong {
+    color: #111827;
+
+    font-size: 16px;
+
+    word-break: break-word;
+}
+
+
+/* =========================
+   SECTION
+========================= */
+
+.section-title {
+    font-size: 25px;
+
+    color: #111827;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   FEATURE CARDS
+========================= */
+
+.feature-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 22px;
+}
+
+.feature-card {
+    background: rgba(255, 255, 255, 0.95);
+
+    border-radius: 20px;
+
+    padding: 28px;
+
+    min-height: 250px;
+
+    display: flex;
+    flex-direction: column;
+
+    box-shadow:
+        0 12px 30px rgba(15, 23, 42, 0.10);
+
+    border: 1px solid rgba(255, 255, 255, 0.8);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 18px 40px rgba(15, 23, 42, 0.16);
+}
+
+.feature-icon {
+    font-size: 38px;
+
+    margin-bottom: 15px;
+}
+
+.feature-card h3 {
+    font-size: 21px;
+
+    color: #111827;
+
+    margin-bottom: 10px;
+}
+
+.feature-card p {
+    color: #64748b;
+
+    line-height: 1.6;
+
+    margin-bottom: 22px;
+
+    flex: 1;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.feature-btn {
+    display: inline-block;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    border: none;
+
+    background: #2563eb;
+
+    color: white;
+
+    padding: 12px 18px;
+
+    border-radius: 10px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.feature-btn:hover {
+    background: #1d4ed8;
+}
+
+.disabled {
+    background: #94a3b8;
+
+    cursor: not-allowed;
+}
+
+.disabled:hover {
+    background: #94a3b8;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 1000px) {
+
+    .account-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .feature-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+
+    .navbar {
+        padding: 15px 5%;
+    }
+
+    .logo {
+        font-size: 22px;
+    }
+
+    .dashboard-container {
+        width: 92%;
+
+        margin: 30px auto;
+    }
+
+    .dashboard-container h1 {
+        font-size: 30px;
+    }
+
+    .account-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+}

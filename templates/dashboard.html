@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - SmartPlot</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(8, 25, 45, 0.94),
+                    rgba(18, 66, 85, 0.90)
+                ),
+                url("https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=2000&q=80");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+
+            color: white;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            width: 100%;
+            padding: 18px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(255,255,255,0.10);
+            backdrop-filter: blur(15px);
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.18);
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: white;
+
+            padding: 10px 17px;
+
+            border-radius: 22px;
+
+            background: rgba(255,255,255,0.12);
+
+            border:
+                1px solid rgba(255,255,255,0.20);
+
+            transition: 0.3s;
+        }
+
+        .nav-btn:hover,
+        .nav-btn:focus {
+            background: white;
+            color: #123c50;
+        }
+
+        .nav-btn:focus,
+        .card:focus,
+        .modify-btn:focus {
+            outline: 3px solid rgba(255,255,255,0.85);
+            outline-offset: 3px;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .container {
+            width: 92%;
+            max-width: 1100px;
+
+            margin: 45px auto 70px;
+        }
+
+        .welcome {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .welcome h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .welcome p {
+            color: rgba(255,255,255,0.70);
+            font-size: 16px;
+        }
+
+        .role-badge {
+            display: inline-block;
+
+            margin-top: 15px;
+
+            padding: 8px 18px;
+
+            border-radius: 20px;
+
+            background: rgba(255,255,255,0.14);
+
+            border:
+                1px solid rgba(255,255,255,0.22);
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* =========================
+           FEATURE CARDS
+        ========================= */
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .card {
+            text-decoration: none;
+            color: white;
+
+            padding: 28px;
+
+            min-height: 180px;
+
+            border-radius: 22px;
+
+            background:
+                rgba(255,255,255,0.11);
+
+            border:
+                1px solid rgba(255,255,255,0.20);
+
+            backdrop-filter: blur(15px);
+
+            transition: 0.3s;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+
+            background:
+                rgba(255,255,255,0.17);
+
+            box-shadow:
+                0 15px 35px rgba(0,0,0,0.20);
+        }
+
+        .card-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 19px;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: rgba(255,255,255,0.68);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           ACCOUNT INFORMATION
+        ========================= */
+
+        .account-section {
+            margin-top: 55px;
+        }
+
+        .account-card {
+            padding: 30px;
+
+            border-radius: 22px;
+
+            background:
+                rgba(255,255,255,0.11);
+
+            border:
+                1px solid rgba(255,255,255,0.20);
+
+            backdrop-filter: blur(15px);
+
+            box-shadow:
+                0 15px 35px rgba(0,0,0,0.18);
+        }
+
+        .account-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 25px;
+
+            gap: 15px;
+        }
+
+        .account-header h2 {
+            font-size: 23px;
+        }
+
+        .modify-btn {
+            text-decoration: none;
+
+            color: #123c50;
+
+            background: white;
+
+            padding: 10px 17px;
+
+            border-radius: 12px;
+
+            font-weight: 700;
+
+            transition: 0.3s;
+        }
+
+        .modify-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .account-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 15px;
+        }
+
+        .info-box {
+            padding: 18px;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,255,255,0.07);
+
+            border:
+                1px solid rgba(255,255,255,0.12);
+        }
+
+        .info-label {
+            display: block;
+
+            font-size: 12px;
+
+            color:
+                rgba(255,255,255,0.55);
+
+            margin-bottom: 7px;
+
+            font-weight: 600;
+        }
+
+        .info-value {
+            font-size: 15px;
+            font-weight: 600;
+
+            word-break: break-word;
+        }
+
+        /* =========================
+           BACK
+        ========================= */
+
+        .back-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .back-btn {
+            display: inline-block;
+
+            text-decoration: none;
+
+            color: white;
+
+            padding: 12px 22px;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,0.10);
+
+            border:
+                1px solid rgba(255,255,255,0.20);
+        }
+
+        .back-btn:hover {
+            background:
+                rgba(255,255,255,0.18);
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 850px) {
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px 5%;
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+            .nav-buttons {
+                width: 100%;
+            }
+
+            .nav-btn {
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+
+            .container {
+                margin-top: 30px;
+            }
+
+            .welcome h1 {
+                font-size: 30px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .account-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .account-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .modify-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        🏡 SmartPlot
+    </div>
+
+    <div class="nav-buttons">
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="nav-btn"
+            aria-label="Go to dashboard"
+        >
+            Dashboard
+        </a>
+
+        {% if user.account_type == "buyer" %}
+
+            <a
+                href="{{ url_for('plots') }}"
+                class="nav-btn"
+                aria-label="Find plots"
+            >
+                Find Plots
+            </a>
+
+            <a
+                href="{{ url_for('favorites') }}"
+                class="nav-btn"
+                aria-label="View favorite plots"
+            >
+                Favorites
+            </a>
+
+        {% else %}
+
+            <a
+                href="{{ url_for('my_listings') }}"
+                class="nav-btn"
+                aria-label="View my listings"
+            >
+                My Listings
+            </a>
+
+            <a
+                href="{{ url_for('inquiries') }}"
+                class="nav-btn"
+                aria-label="View buyer inquiries"
+            >
+                Inquiries
+            </a>
+
+        {% endif %}
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="nav-btn"
+            aria-label="Logout from SmartPlot"
+        >
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="container">
+
+    <section class="welcome">
+
+        <h1>
+            Welcome, {{ user.name }} 👋
+        </h1>
+
+        <p>
+            Manage your SmartPlot account and properties.
+        </p>
+
+        <span class="role-badge">
+
+            {% if user.account_type == "buyer" %}
+                🛒 Buyer Account
+            {% else %}
+                🏡 Seller Account
+            {% endif %}
+
+        </span>
+
+    </section>
+
+
+    <!-- =========================
+         BUYER
+    ========================= -->
+
+    {% if user.account_type == "buyer" %}
+
+        <h2 class="section-title">
+            Buyer Dashboard
+        </h2>
+
+        <div class="cards">
+
+            <a
+                href="{{ url_for('plots') }}"
+                class="card"
+                aria-label="Find available plots"
+            >
+
+                <div>
+
+                    <div class="card-icon">
+                        🔍
+                    </div>
+
+                    <h3>
+                        Find Plots
+                    </h3>
+
+                    <p>
+                        Search and filter available plots
+                        based on location, price, area and
+                        property type.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('favorites') }}"
+                class="card"
+                aria-label="View favorite plots"
+            >
+
+                <div>
+
+                    <div class="card-icon">
+                        ❤️
+                    </div>
+
+                    <h3>
+                        Favorites
+                    </h3>
+
+                    <p>
+                        View the plots you saved for
+                        future consideration.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('plots') }}"
+                class="card"
+                aria-label="Explore properties"
+            >
+
+                <div>
+
+                    <div class="card-icon">
+                        🗺️
+                    </div>
+
+                    <h3>
+                        Explore Properties
+                    </h3>
+
+                    <p>
+                        Discover plots and check their
+                        locations and property details.
+                    </p>
+
+                </div>
+
+            </a>
+
+        </div>
+
+
+    <!-- =========================
+         SELLER
+    ========================= -->
+
+    {% else %}
+
+        <h2 class="section-title">
+            Seller Dashboard
+        </h2>
+
+        <div class="cards">
+
+            <a
+                href="{{ url_for('add_plot') }}"
+                class="card"
+                aria-label="Add a new plot"
+            >
+
+                <div>
+
+                    <div class="card-icon">
+                        ➕
+                    </div>
+
+                    <h3>
+                        Add Plot
+                    </h3>
+
+                    <p>
+                        Publish your plot with property
+                        information, photos and location.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('my_listings') }}"
+                class="card"
+                aria-label="View my plot listings"
+            >
+
+                <div>
+
+                    <div class="card-icon">
+                        🏡
+                    </div>
+
+                    <h3>
+                        My Listings
+                    </h3>
+
+                    <p>
+                        Manage your published plots and
+                        update their availability status.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('inquiries') }}"
+                class="card"
+                aria-label="View buyer inquiries"
+            >
+
+                <div>
+
+                    <div class="card-icon">
+                        🔔
+                    </div>
+
+                    <h3>
+                        Buyer Inquiries
+                    </h3>
+
+                    <p>
+                        View messages from buyers who are
+                        interested in your properties.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('seller_statistics') }}"
+                class="card"
+                aria-label="View seller statistics"
+            >
+
+                <div>
+
+                    <div class="card-icon">
+                        📊
+                    </div>
+
+                    <h3>
+                        Seller Statistics
+                    </h3>
+
+                    <p>
+                        View listings, inquiries,
+                        favorites and property statistics.
+                    </p>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- =========================
+         ACCOUNT INFORMATION
+    ========================= -->
+
+    <section class="account-section">
+
+        <h2 class="section-title">
+            Account Information
+        </h2>
+
+        <div class="account-card">
+
+            <div class="account-header">
+
+                <h2>
+                    👤 Your Account
+                </h2>
+
+                <a
+                    href="{{ url_for('modify_account') }}"
+                    class="modify-btn"
+                    aria-label="Modify account information"
+                >
+                    ✏️ Modify Account
+                </a>
+
+            </div>
+
+
+            <div class="account-grid">
+
+                <div class="info-box">
+
+                    <span class="info-label">
+                        Full Name
+                    </span>
+
+                    <span class="info-value">
+                        {{ user.name }}
+                    </span>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <span class="info-label">
+                        Email Address
+                    </span>
+
+                    <span class="info-value">
+                        {{ user.email }}
+                    </span>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <span class="info-label">
+                        Phone Number
+                    </span>
+
+                    <span class="info-value">
+                        {{ user.phone }}
+                    </span>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <span class="info-label">
+                        Account Type
+                    </span>
+
+                    <span class="info-value">
+
+                        {% if user.account_type == "buyer" %}
+                            Buyer
+                        {% else %}
+                            Seller
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         BACK
+    ========================= -->
+
+    <div class="back-section">
+
+        <a
+            href="{{ url_for('index') }}"
+            class="back-btn"
+            aria-label="Back to SmartPlot home page"
+        >
+            ← Back to Home
+        </a>
+
+    </div>
+
+</main>
+
+</body>
+</html>

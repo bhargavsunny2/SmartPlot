@@ -1,0 +1,1409 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>{{ plot["title"] }} - SmartPlot</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(8, 25, 45, 0.94),
+                    rgba(18, 66, 85, 0.90)
+                ),
+                url("https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=2000&q=80");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+
+            color: white;
+        }
+
+        /* =========================
+           ACCESSIBILITY
+        ========================= */
+
+        a:focus-visible,
+        button:focus-visible,
+        textarea:focus-visible {
+            outline: 3px solid #facc15;
+            outline-offset: 3px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            width: 100%;
+            padding: 18px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(255,255,255,0.10);
+
+            backdrop-filter: blur(15px);
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.18);
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-right a {
+            color: white;
+            text-decoration: none;
+
+            padding: 10px 16px;
+
+            border-radius: 22px;
+
+            background: rgba(255,255,255,0.10);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.18);
+
+            transition: 0.3s;
+        }
+
+        .nav-right a:hover {
+            background: white;
+            color: #123c50;
+        }
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+
+            margin: 35px auto 60px;
+        }
+
+        .back {
+            display: inline-block;
+
+            margin-bottom: 20px;
+
+            color: white;
+            text-decoration: none;
+
+            padding: 10px 16px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,0.10);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.18);
+        }
+
+        .back:hover {
+            background:
+                rgba(255,255,255,0.18);
+        }
+
+        /* =========================
+           MAIN CARD
+        ========================= */
+
+        .main-card {
+            background:
+                rgba(255,255,255,0.12);
+
+            backdrop-filter:
+                blur(18px);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.20);
+
+            border-radius: 22px;
+
+            padding: 28px;
+
+            box-shadow:
+                0 20px 45px
+                rgba(0,0,0,0.20);
+        }
+
+        .title-row {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: flex-start;
+
+            gap: 20px;
+
+            margin-bottom: 8px;
+        }
+
+        .title {
+            font-size: 34px;
+            font-weight: 800;
+        }
+
+        .location {
+            color:
+                rgba(255,255,255,0.70);
+
+            font-size: 16px;
+
+            margin-bottom: 25px;
+        }
+
+        /* =========================
+           FAVORITE
+        ========================= */
+
+        .favorite-form {
+            margin: 0;
+        }
+
+        .favorite-btn {
+            border: none;
+
+            width: 50px;
+            height: 50px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,0.12);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.22);
+
+            color: white;
+
+            font-size: 25px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .favorite-btn:hover {
+            transform: scale(1.08);
+
+            background:
+                rgba(255,80,110,0.25);
+        }
+
+        /* =========================
+           GALLERY
+        ========================= */
+
+        .gallery {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(250px, 1fr)
+                );
+
+            gap: 15px;
+
+            margin-bottom: 30px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 240px;
+
+            object-fit: cover;
+
+            border-radius: 14px;
+
+            display: block;
+        }
+
+        .no-images {
+            background:
+                rgba(255,255,255,0.08);
+
+            border-radius: 14px;
+
+            min-height: 240px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            color:
+                rgba(255,255,255,0.60);
+
+            font-size: 18px;
+
+            grid-column: 1 / -1;
+        }
+
+        /* =========================
+           PRICE
+        ========================= */
+
+        .price-box {
+            padding: 22px;
+
+            background:
+                rgba(255,255,255,0.09);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.14);
+
+            border-radius: 15px;
+
+            margin-bottom: 30px;
+        }
+
+        .price {
+            font-size: 32px;
+            font-weight: 800;
+        }
+
+        .per-sqft {
+            margin-top: 8px;
+
+            color:
+                rgba(255,255,255,0.62);
+        }
+
+        /* =========================
+           SECTION
+        ========================= */
+
+        .section {
+            margin-top: 30px;
+        }
+
+        .section h2 {
+            margin-bottom: 15px;
+            font-size: 23px;
+        }
+
+        /* =========================
+           INFORMATION
+        ========================= */
+
+        .info-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(210px, 1fr)
+                );
+
+            gap: 14px;
+        }
+
+        .info-box {
+            background:
+                rgba(255,255,255,0.08);
+
+            padding: 17px;
+
+            border-radius: 12px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+        }
+
+        .info-label {
+            color:
+                rgba(255,255,255,0.55);
+
+            font-size: 13px;
+
+            margin-bottom: 7px;
+        }
+
+        .info-value {
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        /* =========================
+           DESCRIPTION
+        ========================= */
+
+        .description {
+            background:
+                rgba(255,255,255,0.08);
+
+            padding: 20px;
+
+            border-radius: 12px;
+
+            line-height: 1.7;
+
+            color:
+                rgba(255,255,255,0.78);
+
+            white-space: pre-line;
+        }
+
+        /* =========================
+           OWNER
+        ========================= */
+
+        .owner-card {
+            margin-top: 30px;
+
+            padding: 22px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.14);
+        }
+
+        .owner-card h2 {
+            margin-bottom: 17px;
+        }
+
+        .owner-item {
+            margin: 10px 0;
+
+            color:
+                rgba(255,255,255,0.78);
+        }
+
+        .owner-item strong {
+            color: white;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .buttons {
+            display: flex;
+
+            gap: 12px;
+
+            margin-top: 22px;
+
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+
+            padding: 13px 22px;
+
+            border-radius: 11px;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            color: white;
+
+            transition: 0.3s;
+
+            border: none;
+
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform:
+                translateY(-2px);
+        }
+
+        .call-btn {
+            background: #2563eb;
+        }
+
+        .whatsapp-btn {
+            background: #16a34a;
+        }
+
+        /* =========================
+           INQUIRY
+        ========================= */
+
+        .inquiry-card {
+            margin-top: 30px;
+
+            padding: 25px;
+
+            border-radius: 16px;
+
+            background:
+                rgba(255,255,255,0.09);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.15);
+        }
+
+        .inquiry-card h2 {
+            margin-bottom: 8px;
+        }
+
+        .inquiry-subtitle {
+            color:
+                rgba(255,255,255,0.62);
+
+            margin-bottom: 18px;
+
+            line-height: 1.5;
+        }
+
+        .inquiry-form {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 12px;
+        }
+
+        .inquiry-label {
+            font-weight: 700;
+        }
+
+        .inquiry-form textarea {
+            width: 100%;
+
+            min-height: 130px;
+
+            resize: vertical;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.20);
+
+            background:
+                rgba(0,0,0,0.20);
+
+            color: white;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+        .inquiry-form textarea::placeholder {
+            color:
+                rgba(255,255,255,0.45);
+        }
+
+        .inquiry-form textarea:focus {
+            border-color:
+                #facc15;
+        }
+
+        .send-btn {
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #0ea5e9
+                );
+
+            width: fit-content;
+        }
+
+        /* =========================
+           SUCCESS MESSAGE
+        ========================= */
+
+        .success-message {
+            margin-top: 25px;
+
+            padding: 16px;
+
+            border-radius: 12px;
+
+            background:
+                rgba(22,163,74,0.18);
+
+            border:
+                1px solid
+                rgba(74,222,128,0.30);
+
+            color:
+                #bbf7d0;
+
+            line-height: 1.5;
+        }
+
+        /* =========================
+           MAP
+        ========================= */
+
+        .map-card {
+            margin-top: 30px;
+
+            padding: 22px;
+
+            border-radius: 16px;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.14);
+        }
+
+        .map-card h2 {
+            margin-bottom: 15px;
+        }
+
+        .map-placeholder {
+            min-height: 180px;
+
+            border-radius: 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 20px;
+
+            background:
+                rgba(255,255,255,0.07);
+
+            color:
+                rgba(255,255,255,0.65);
+        }
+
+        .map-link {
+            display: inline-block;
+
+            margin-top: 15px;
+
+            padding: 11px 17px;
+
+            border-radius: 10px;
+
+            color: white;
+
+            text-decoration: none;
+
+            background: #0f766e;
+        }
+
+        /* =========================
+           NOTE
+        ========================= */
+
+        .note {
+            margin-top: 25px;
+
+            padding: 16px;
+
+            background:
+                rgba(255,170,70,0.12);
+
+            border:
+                1px solid
+                rgba(255,190,100,0.25);
+
+            border-radius: 12px;
+
+            color:
+                #ffd8a8;
+
+            line-height: 1.5;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding:
+                    15px 5%;
+
+                align-items: flex-start;
+
+                gap: 10px;
+            }
+
+            .logo {
+                font-size: 21px;
+            }
+
+            .nav-right {
+                gap: 5px;
+            }
+
+            .nav-right a {
+                padding:
+                    8px 10px;
+
+                font-size: 12px;
+            }
+
+            .container {
+                width: 94%;
+
+                margin-top: 25px;
+            }
+
+            .main-card {
+                padding: 20px;
+            }
+
+            .title-row {
+                align-items: center;
+            }
+
+            .title {
+                font-size: 25px;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery img {
+                height: 220px;
+            }
+
+            .favorite-btn {
+                width: 45px;
+                height: 45px;
+
+                font-size: 21px;
+            }
+
+            .send-btn {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =================================================
+     NAVIGATION
+================================================= -->
+
+<nav
+    class="navbar"
+    aria-label="Main navigation"
+>
+
+    <div
+        class="logo"
+        aria-label="SmartPlot home"
+    >
+        🏡 SmartPlot
+    </div>
+
+
+    <div class="nav-right">
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            aria-label="Go to dashboard"
+        >
+            Dashboard
+        </a>
+
+
+        {% if session.get("user_role") == "buyer" %}
+
+            <a
+                href="{{ url_for('plots') }}"
+                aria-label="Find available plots"
+            >
+                🔎 Find Plots
+            </a>
+
+
+            <a
+                href="{{ url_for('favorites') }}"
+                aria-label="View favorite plots"
+            >
+                ❤️ Favorites
+            </a>
+
+        {% endif %}
+
+
+        {% if session.get("user_role") == "seller" %}
+
+            <a
+                href="{{ url_for('my_listings') }}"
+                aria-label="View my plot listings"
+            >
+                🏠 My Listings
+            </a>
+
+
+            <a
+                href="{{ url_for('inquiries') }}"
+                aria-label="View buyer inquiries"
+            >
+                🔔 Inquiries
+            </a>
+
+        {% endif %}
+
+
+        <a
+            href="{{ url_for('logout') }}"
+            aria-label="Logout from SmartPlot"
+        >
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =================================================
+     MAIN
+================================================= -->
+
+<main class="container">
+
+    <a
+        href="{{ url_for('plots') }}"
+        class="back"
+        aria-label="Go back to available plots"
+    >
+        ← Back to Plots
+    </a>
+
+
+    <article class="main-card">
+
+
+        <!-- =================================================
+             TITLE
+        ================================================= -->
+
+        <div class="title-row">
+
+            <div>
+
+                <h1 class="title">
+                    {{ plot["title"] }}
+                </h1>
+
+                <div
+                    class="location"
+                    aria-label="Plot location"
+                >
+                    📍 {{ plot["location"] }}
+                </div>
+
+            </div>
+
+
+            {% if session.get("user_role") == "buyer" %}
+
+                <form
+                    method="POST"
+                    action="{{ url_for(
+                        'toggle_favorite',
+                        plot_id=plot['id']
+                    ) }}"
+                    class="favorite-form"
+                >
+
+                    {% if is_favorite %}
+
+                        <button
+                            type="submit"
+                            class="favorite-btn"
+                            aria-label="Remove this plot from favorites"
+                            title="Remove from favorites"
+                        >
+                            ❤️
+                        </button>
+
+                    {% else %}
+
+                        <button
+                            type="submit"
+                            class="favorite-btn"
+                            aria-label="Add this plot to favorites"
+                            title="Add to favorites"
+                        >
+                            🤍
+                        </button>
+
+                    {% endif %}
+
+                </form>
+
+            {% endif %}
+
+        </div>
+
+
+
+        <!-- =================================================
+             GALLERY
+        ================================================= -->
+
+        <section
+            class="gallery"
+            aria-label="Plot photos"
+        >
+
+            {% if images %}
+
+                {% for image in images %}
+
+                    <img
+                        src="{{ url_for(
+                            'uploaded_plot_image',
+                            filename=image['filename']
+                        ) }}"
+                        alt="Photo of {{ plot['title'] }}"
+                        loading="lazy"
+                    >
+
+                {% endfor %}
+
+            {% else %}
+
+                <div
+                    class="no-images"
+                    role="status"
+                >
+                    🏡 No plot photos uploaded yet.
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+
+        <!-- =================================================
+             PRICE
+        ================================================= -->
+
+        <section
+            class="price-box"
+            aria-label="Plot price"
+        >
+
+            <div class="price">
+
+                ₹{{ "{:,.0f}".format(
+                    plot["price"] or 0
+                ) }}
+
+            </div>
+
+
+            <div class="per-sqft">
+
+                {% if price_per_sqft %}
+
+                    ₹{{ "{:,.2f}".format(
+                        price_per_sqft
+                    ) }}
+
+                    per sq.ft
+
+                {% else %}
+
+                    Price per sq.ft not available.
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PROPERTY DETAILS
+        ================================================= -->
+
+        <section class="section">
+
+            <h2>
+                🏠 Property Details
+            </h2>
+
+
+            <div class="info-grid">
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Plot Area
+                    </div>
+
+                    <div
+                        class="info-value"
+                        aria-label="Plot area"
+                    >
+
+                        {{ "{:,.0f}".format(
+                            plot["area"] or 0
+                        ) }}
+
+                        sq.ft
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Road Width
+                    </div>
+
+                    <div class="info-value">
+
+                        {% if plot["road_width"] %}
+
+                            {{ plot["road_width"] }} ft
+
+                        {% else %}
+
+                            Not provided
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Property Type
+                    </div>
+
+                    <div class="info-value">
+
+                        {{ plot["property_type"]
+                           or "Not provided" }}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Facing
+                    </div>
+
+                    <div class="info-value">
+
+                        {{ plot["facing"]
+                           or "Not provided" }}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Availability
+                    </div>
+
+                    <div class="info-value">
+
+                        {{ plot["status"]
+                           or "Available" }}
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             DESCRIPTION
+        ================================================= -->
+
+        <section class="section">
+
+            <h2>
+                📝 Description
+            </h2>
+
+
+            <div
+                class="description"
+                aria-label="Plot description"
+            >
+
+                {% if plot["description"] %}
+
+                    {{ plot["description"] }}
+
+                {% else %}
+
+                    No description provided.
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             MAP
+        ================================================= -->
+
+        <section
+            class="map-card"
+            aria-labelledby="location-heading"
+        >
+
+            <h2 id="location-heading">
+                🗺️ Location
+            </h2>
+
+
+            <div class="map-placeholder">
+
+                <div>
+
+                    <strong>
+                        📍 {{ plot["location"] }}
+                    </strong>
+
+                    <br><br>
+
+                    Use the button below to open this
+                    location in Google Maps.
+
+                    <br>
+
+
+                    <a
+                        class="map-link"
+                        href="https://www.google.com/maps/search/?api=1&query={{ plot['location'] | urlencode }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Open {{ plot['location'] }} in Google Maps in a new tab"
+                    >
+                        🗺️ Open in Google Maps
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             OWNER
+        ================================================= -->
+
+        <section
+            class="owner-card"
+            aria-labelledby="owner-heading"
+        >
+
+            <h2 id="owner-heading">
+                👤 Contact Owner
+            </h2>
+
+
+            <div class="owner-item">
+
+                <strong>
+                    Name:
+                </strong>
+
+                {{ plot["owner_name"]
+                   or "Not available" }}
+
+            </div>
+
+
+            <div class="owner-item">
+
+                <strong>
+                    Phone:
+                </strong>
+
+                {{ plot["owner_phone"]
+                   or "Not available" }}
+
+            </div>
+
+
+            <div class="owner-item">
+
+                <strong>
+                    Email:
+                </strong>
+
+                {{ plot["owner_email"]
+                   or "Not available" }}
+
+            </div>
+
+
+            <div class="buttons">
+
+
+                {% if plot["owner_phone"] %}
+
+                    <a
+                        class="btn call-btn"
+                        href="tel:{{ plot['owner_phone'] }}"
+                        aria-label="Call plot owner"
+                    >
+                        📞 Call Owner
+                    </a>
+
+
+                    <a
+                        class="btn whatsapp-btn"
+                        href="https://wa.me/{{ plot['owner_phone'] }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Contact plot owner through WhatsApp in a new tab"
+                    >
+                        💬 WhatsApp Owner
+                    </a>
+
+                {% endif %}
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             BUYER INQUIRY
+        ================================================= -->
+
+        {% if session.get("user_role") == "buyer"
+              and plot["status"] == "available" %}
+
+            <section
+                class="inquiry-card"
+                aria-labelledby="inquiry-heading"
+            >
+
+                <h2 id="inquiry-heading">
+                    🔔 Send Inquiry to Owner
+                </h2>
+
+
+                <p class="inquiry-subtitle">
+
+                    Interested in this plot?
+
+                    Send a message directly to the seller.
+                    The seller will receive your inquiry
+                    in their SmartPlot dashboard.
+
+                </p>
+
+
+                <form
+                    method="POST"
+                    action="{{ url_for(
+                        'send_inquiry',
+                        plot_id=plot['id']
+                    ) }}"
+                    class="inquiry-form"
+                >
+
+                    <label
+                        for="inquiry-message"
+                        class="inquiry-label"
+                    >
+                        Your message
+                    </label>
+
+
+                    <textarea
+                        id="inquiry-message"
+                        name="message"
+                        required
+                        maxlength="1000"
+                        aria-describedby="inquiry-help"
+                        placeholder="Example: Hi, I am interested in this plot. Is it still available? I would like to know more about the property."
+                    ></textarea>
+
+
+                    <small id="inquiry-help">
+                        Maximum 1000 characters.
+                    </small>
+
+
+                    <button
+                        type="submit"
+                        class="btn send-btn"
+                        aria-label="Send inquiry to plot owner"
+                    >
+                        🔔 Send Inquiry
+                    </button>
+
+                </form>
+
+            </section>
+
+        {% endif %}
+
+
+
+        <!-- =================================================
+             SUCCESS MESSAGE
+        ================================================= -->
+
+        {% if request.args.get("inquiry") == "sent" %}
+
+            <div
+                class="success-message"
+                role="status"
+                aria-live="polite"
+            >
+
+                ✅ <strong>Inquiry sent successfully!</strong>
+
+                <br>
+
+                The plot owner has received your message
+                and can contact you.
+
+            </div>
+
+        {% endif %}
+
+
+
+        <!-- =================================================
+             SAFETY
+        ================================================= -->
+
+        <aside
+            class="note"
+            aria-label="Property safety warning"
+        >
+
+            ⚠️ <strong>Safety Note:</strong>
+
+            SmartPlot connects buyers directly with
+            plot owners.
+
+            Always verify property documents,
+            ownership, approvals and other legal details
+            before making any payment or agreement.
+
+        </aside>
+
+
+    </article>
+
+</main>
+
+
+</body>
+
+</html>
+```

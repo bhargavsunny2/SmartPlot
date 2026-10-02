@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Favorites - SmartPlot</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(8, 25, 45, 0.93),
+                    rgba(18, 66, 85, 0.89)
+                ),
+                url("https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=2000&q=80");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+
+            color: white;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            width: 100%;
+
+            padding: 18px 7%;
+
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(255,255,255,0.10);
+
+            backdrop-filter: blur(15px);
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.18);
+
+            position: sticky;
+            top: 0;
+
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: white;
+
+            padding: 10px 17px;
+
+            border-radius: 22px;
+
+            background: rgba(255,255,255,0.12);
+
+            border:
+                1px solid rgba(255,255,255,0.20);
+
+            transition: 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: white;
+            color: #123c50;
+        }
+
+        /* MAIN */
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+
+            margin: 40px auto 60px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .page-header h1 {
+            font-size: 38px;
+            margin-bottom: 9px;
+        }
+
+        .page-header p {
+            color: rgba(255,255,255,0.72);
+        }
+
+        /* GRID */
+
+        .favorites-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(280px, 1fr)
+                );
+
+            gap: 22px;
+        }
+
+        /* CARD */
+
+        .favorite-card {
+            overflow: hidden;
+
+            background:
+                rgba(255,255,255,0.12);
+
+            backdrop-filter: blur(18px);
+
+            border:
+                1px solid rgba(255,255,255,0.21);
+
+            border-radius: 21px;
+
+            box-shadow:
+                0 15px 35px rgba(0,0,0,0.18);
+
+            transition: 0.3s;
+        }
+
+        .favorite-card:hover {
+            transform: translateY(-6px);
+
+            background:
+                rgba(255,255,255,0.17);
+        }
+
+        /* IMAGE */
+
+        .plot-image {
+            width: 100%;
+            height: 205px;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+        .no-image {
+            width: 100%;
+            height: 205px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(30,80,100,0.8),
+                    rgba(10,35,55,0.9)
+                );
+
+            font-size: 55px;
+        }
+
+        /* CONTENT */
+
+        .card-content {
+            padding: 22px;
+        }
+
+        .card-title {
+            font-size: 21px;
+            margin-bottom: 9px;
+        }
+
+        .location {
+            color: rgba(255,255,255,0.70);
+
+            font-size: 14px;
+
+            margin-bottom: 17px;
+        }
+
+        /* DETAILS */
+
+        .details {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 10px;
+
+            margin-bottom: 17px;
+        }
+
+        .detail {
+            padding: 11px;
+
+            border-radius: 11px;
+
+            background:
+                rgba(255,255,255,0.08);
+        }
+
+        .detail span {
+            display: block;
+
+            font-size: 11px;
+
+            color:
+                rgba(255,255,255,0.55);
+
+            margin-bottom: 5px;
+        }
+
+        .detail strong {
+            font-size: 14px;
+        }
+
+        /* PRICE */
+
+        .price {
+            font-size: 23px;
+
+            font-weight: 800;
+
+            margin-bottom: 5px;
+        }
+
+        .price-per {
+            color:
+                rgba(255,255,255,0.62);
+
+            font-size: 12px;
+
+            margin-bottom: 16px;
+        }
+
+        /* OWNER */
+
+        .owner {
+            padding: 14px;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,255,255,0.07);
+
+            border:
+                1px solid rgba(255,255,255,0.10);
+
+            margin-bottom: 17px;
+        }
+
+        .owner-title {
+            font-size: 12px;
+
+            color:
+                rgba(255,255,255,0.55);
+
+            margin-bottom: 6px;
+        }
+
+        .owner-name {
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .owner-phone {
+            color:
+                rgba(255,255,255,0.70);
+
+            font-size: 13px;
+        }
+
+        /* STATUS */
+
+        .status {
+            display: inline-block;
+
+            padding: 6px 11px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(75,220,150,0.18);
+
+            border:
+                1px solid rgba(75,220,150,0.30);
+
+            color: #b8ffda;
+
+            font-size: 12px;
+
+            text-transform: capitalize;
+
+            margin-bottom: 16px;
+        }
+
+        /* BUTTONS */
+
+        .buttons {
+            display: flex;
+            gap: 9px;
+        }
+
+        .view-btn {
+            flex: 1;
+
+            text-decoration: none;
+
+            text-align: center;
+
+            padding: 11px;
+
+            border-radius: 11px;
+
+            background: white;
+
+            color: #123c50;
+
+            font-weight: 700;
+
+            font-size: 13px;
+        }
+
+        .view-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .remove-form {
+            flex: 1;
+            margin: 0;
+        }
+
+        .remove-btn {
+            width: 100%;
+
+            padding: 11px;
+
+            border-radius: 11px;
+
+            background:
+                rgba(255,80,110,0.16);
+
+            border:
+                1px solid rgba(255,120,140,0.30);
+
+            color: #ffd3db;
+
+            font-weight: 700;
+
+            font-size: 13px;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .remove-btn:hover {
+            background:
+                rgba(255,80,110,0.27);
+        }
+
+        /* EMPTY */
+
+        .empty {
+            max-width: 650px;
+
+            margin: 40px auto;
+
+            text-align: center;
+
+            padding: 65px 25px;
+
+            background:
+                rgba(255,255,255,0.11);
+
+            backdrop-filter: blur(18px);
+
+            border:
+                1px solid rgba(255,255,255,0.20);
+
+            border-radius: 24px;
+        }
+
+        .empty-icon {
+            font-size: 65px;
+            margin-bottom: 18px;
+        }
+
+        .empty h2 {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .empty p {
+            color:
+                rgba(255,255,255,0.65);
+
+            margin-bottom: 22px;
+
+            line-height: 1.5;
+        }
+
+        .find-btn {
+            display: inline-block;
+
+            text-decoration: none;
+
+            padding: 12px 23px;
+
+            border-radius: 12px;
+
+            background: white;
+
+            color: #123c50;
+
+            font-weight: 700;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 16px 5%;
+            }
+
+            .logo {
+                font-size: 21px;
+            }
+
+            .nav-buttons {
+                gap: 5px;
+            }
+
+            .nav-btn {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+
+            .container {
+                width: 92%;
+                margin-top: 30px;
+            }
+
+            .page-header h1 {
+                font-size: 30px;
+            }
+
+            .favorites-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        🏡 SmartPlot
+    </div>
+
+    <div class="nav-buttons">
+
+        <a
+            href="{{ url_for('plots') }}"
+            class="nav-btn"
+        >
+            🔎 Find Plots
+        </a>
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="nav-btn"
+        >
+            Dashboard
+        </a>
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="nav-btn"
+        >
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- MAIN -->
+
+<main class="container">
+
+
+    <div class="page-header">
+
+        <h1>
+            ❤️ My Favorites
+        </h1>
+
+        <p>
+            Your saved plots are shown here.
+        </p>
+
+    </div>
+
+
+    <!-- IMPORTANT:
+         Flask sends "favorites"
+         not "plots"
+    -->
+
+    {% if favorites %}
+
+        <section class="favorites-grid">
+
+
+            {% for plot in favorites %}
+
+                <article class="favorite-card">
+
+
+                    <!-- IMAGE -->
+
+                    {% if plot['image'] %}
+
+                        <img
+                            src="{{ url_for(
+                                'uploaded_plot_image',
+                                filename=plot['image']
+                            ) }}"
+                            alt="{{ plot['title'] }}"
+                            class="plot-image"
+                        >
+
+                    {% else %}
+
+                        <div class="no-image">
+                            🏡
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- CONTENT -->
+
+                    <div class="card-content">
+
+
+                        <h2 class="card-title">
+
+                            {{ plot['title'] }}
+
+                        </h2>
+
+
+                        <div class="location">
+
+                            📍 {{ plot['location'] }}
+
+                        </div>
+
+
+                        <!-- DETAILS -->
+
+                        <div class="details">
+
+
+                            <div class="detail">
+
+                                <span>
+                                    Area
+                                </span>
+
+                                <strong>
+
+                                    {{ "{:,.0f}".format(
+                                        plot['area'] or 0
+                                    ) }}
+
+                                    sq.ft
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <span>
+                                    Property
+                                </span>
+
+                                <strong>
+
+                                    {{ plot['property_type']
+                                       or 'Not specified' }}
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <span>
+                                    Road Width
+                                </span>
+
+                                <strong>
+
+                                    {% if plot['road_width'] %}
+
+                                        {{ plot['road_width'] }} ft
+
+                                    {% else %}
+
+                                        Not specified
+
+                                    {% endif %}
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <span>
+                                    Facing
+                                </span>
+
+                                <strong>
+
+                                    {{ plot['facing']
+                                       or 'Not specified' }}
+
+                                </strong>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- PRICE -->
+
+                        <div class="price">
+
+                            ₹{{ "{:,.0f}".format(
+                                plot['price'] or 0
+                            ) }}
+
+                        </div>
+
+
+                        {% if plot['area'] and plot['area'] > 0 %}
+
+                            <div class="price-per">
+
+                                ₹{{ "{:,.0f}".format(
+                                    plot['price'] / plot['area']
+                                ) }}
+
+                                per sq.ft
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- STATUS -->
+
+                        <div>
+
+                            <span class="status">
+
+                                {{ plot['status']
+                                   or 'Available' }}
+
+                            </span>
+
+                        </div>
+
+
+                        <!-- OWNER -->
+
+                        <div class="owner">
+
+                            <div class="owner-title">
+                                Property Owner
+                            </div>
+
+                            <div class="owner-name">
+
+                                {{ plot['owner_name']
+                                   or 'Owner' }}
+
+                            </div>
+
+                            <div class="owner-phone">
+
+                                📞
+
+                                {{ plot['owner_phone']
+                                   or 'Not available' }}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- BUTTONS -->
+
+                        <div class="buttons">
+
+
+                            <a
+                                href="{{ url_for(
+                                    'plot_details',
+                                    plot_id=plot['id']
+                                ) }}"
+                                class="view-btn"
+                            >
+                                View Details
+                            </a>
+
+
+                            <!-- REMOVE FAVORITE -->
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'toggle_favorite',
+                                    plot_id=plot['id']
+                                ) }}"
+                                class="remove-form"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="remove-btn"
+                                >
+                                    💔 Remove
+                                </button>
+
+                            </form>
+
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </section>
+
+
+    {% else %}
+
+
+        <!-- NO FAVORITES -->
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                ❤️
+            </div>
+
+            <h2>
+                No Favorite Plots Yet
+            </h2>
+
+            <p>
+                You haven't saved any plots yet.
+                Browse available properties and
+                click the heart button to save them here.
+            </p>
+
+            <a
+                href="{{ url_for('plots') }}"
+                class="find-btn"
+            >
+                🔎 Find Plots
+            </a>
+
+        </div>
+
+    {% endif %}
+
+
+</main>
+
+
+</body>
+
+</html>
