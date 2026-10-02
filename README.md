@@ -1,115 +1,179 @@
 # 🏡 SmartPlot
 
-SmartPlot is a Flask-based real-estate web application that connects plot buyers and sellers directly.
+SmartPlot is a web-based real-estate plot finder and buyer-seller connection platform.
 
-Buyers can search and filter available plots, view complete property details, save favorite plots, check locations, contact owners, and send inquiries.
+It allows buyers to search and compare available plots, view complete property details, save favorite plots, contact owners, and send inquiries.
 
-Sellers can publish plots, upload photos, manage listings, update availability, receive buyer inquiries, and view seller statistics.
+Sellers can publish their plots, upload property photos, manage listing availability, receive buyer inquiries, and view listing statistics.
 
 ---
 
-## 🚀 Features
+## 🌐 Live Demo
 
-### 🛒 Buyer Features
+**Live Website:**
 
-- User registration and login
-- Search available plots
-- Filter plots by:
-  - Location
-  - Minimum area
-  - Maximum area
-  - Minimum price
-  - Maximum price
-  - Property type
-- Sort plots by:
-  - Newest
-  - Price: Low to High
-  - Price: High to Low
-  - Area: Low to High
-  - Area: High to Low
-- View detailed plot information
+https://smartplot-hxzv.onrender.com
+
+---
+
+## 📌 Project Overview
+
+SmartPlot is designed to make the process of finding and selling plots easier through a simple web platform.
+
+### 👤 Buyers can:
+
+- Create a buyer account
+- Login securely
+- Search for available plots
+- Filter plots by location
+- Filter by minimum and maximum area
+- Filter by minimum and maximum price
+- Filter by property type
+- Sort plots by price or area
+- View complete plot details
 - View plot photos
-- Calculate and display price per sq.ft.
-- Save plots to Favorites
-- View saved Favorites
-- Open plot location in Google Maps
-- Call the plot owner
+- Calculate/view price per sq.ft.
+- Save plots to favorites
+- View favorite plots
+- View approximate map location
+- Open the location in Google Maps
+- Contact the owner by phone
 - Contact the owner through WhatsApp
-- Send inquiries directly to sellers
+- Send inquiries to sellers
 
----
+### 🏠 Sellers can:
 
-### 🏡 Seller Features
-
-- Seller registration and login
+- Create a seller account
+- Login securely
 - Add new plot listings
-- Upload plot photos
-- Add property information
-- Add location and landmark
-- Manage personal listings
-- Update plot availability
-- Mark plots as:
-  - Available
-  - Reserved
-  - Sold
-- View buyer inquiries
-- View buyer contact information
+- Add plot location
+- Add plot area
+- Add selling price
+- Add road width
+- Select property type
+- Select plot facing
+- Add landmark
+- Add description
+- Upload plot images
+- View their listings
+- Change listing status
+- Mark properties as available
+- Mark properties as reserved
+- Mark properties as sold
+- Delete listings
+- Receive buyer inquiries
 - Mark inquiries as read
 - View seller statistics
 
 ---
 
-## 📊 Seller Statistics
+## ⭐ Main Features
 
-The seller dashboard provides statistics such as:
+### 🔍 Plot Search
 
-- Total Listings
-- Available Listings
-- Reserved Listings
-- Sold Listings
-- Total Buyer Inquiries
-- Total Favorites
+Buyers can search available plots using:
 
-The Favorites statistic represents the number of times buyers have saved the seller's plots.
+- Location
+- Plot area
+- Price range
+- Property type
+
+---
+
+### 📊 Sorting
+
+Plots can be sorted by:
+
+- Newest listings
+- Lowest price
+- Highest price
+- Lowest area
+- Highest area
+
+---
+
+### ❤️ Favorites
+
+Buyers can save interesting plots to their favorites.
+
+Each buyer has their own favorites list.
+
+---
+
+### 📷 Plot Images
+
+Sellers can upload up to 5 images for each plot listing.
+
+Supported formats:
+
+- JPG
+- JPEG
+- PNG
+- WEBP
+
+---
+
+### 🗺️ Location
+
+Each plot contains a location and landmark.
+
+Buyers can open the location in Google Maps.
+
+---
+
+### 🔔 Buyer-Seller Inquiry System
+
+Buyers can send inquiries directly to plot owners.
+
+Sellers can:
+
+- View buyer name
+- View buyer email
+- View buyer phone
+- Read the inquiry message
+- Mark inquiries as read
+
+---
+
+### 📈 Seller Statistics
+
+Sellers can view information such as:
+
+- Total listings
+- Available listings
+- Reserved listings
+- Sold listings
+- Total inquiries
+- New inquiries
+- Read inquiries
+- Total favorites
+- Total available property value
+- Average property price
+- Recent listings
 
 ---
 
 ## 🔐 Security Features
 
-SmartPlot includes several basic security measures:
+SmartPlot includes several security features:
 
-- Password hashing using Werkzeug
-- Secure user sessions
-- Role-based access for buyers and sellers
-- Parameterized SQL queries
+- Password hashing
+- Login authentication
+- Buyer and seller role-based access
+- Secure session cookies
+- HTTP-only cookies
+- SameSite cookies
+- Production HTTPS cookie support
+- Security response headers
+- Content Security Policy
+- X-Content-Type-Options
+- X-Frame-Options
+- Referrer Policy
+- File extension validation
 - Secure uploaded filenames
-- Uploaded image type validation
 - Unique filenames for uploaded images
-- Maximum request/upload size limit
-- Session-based authentication
-- Restricted seller and buyer functionality
-
----
-
-## 🗺️ Location Feature
-
-Each plot contains location information.
-
-Users can open the approximate plot location using Google Maps.
-
-This helps buyers understand where the property is located before contacting the seller.
-
----
-
-## 🔔 Buyer-Seller Inquiry System
-
-Buyers can send messages to sellers from the plot details page.
-
-Example:
-
-> Hi, I am interested in this plot. Is it still available?
-
-The inquiry is stored in the database and displayed in the seller's inquiry section.
+- Request size limitation
+- SQL parameterized queries
 
 ---
 
@@ -119,27 +183,81 @@ The inquiry is stored in the database and displayed in the seller's inquiry sect
 
 - Python
 - Flask
+- SQLite
 
 ### Frontend
 
-- HTML5
-- CSS3
-- Jinja2
-
-### Database
-
-- SQLite
+- HTML
+- CSS
+- Jinja2 Templates
 
 ### Security
 
 - Werkzeug Password Hashing
-- Secure Filename Handling
-- Session Authentication
-- Parameterized SQL Queries
+- Flask Sessions
+
+### Deployment
+
+- GitHub
+- Render
 
 ---
 
-## 📂 Project Structure
+## 🗄️ Database
+
+SmartPlot uses SQLite.
+
+### Database Tables
+
+#### Users
+
+Stores:
+
+- User ID
+- Name
+- Email
+- Phone
+- Password
+- Role
+
+Roles:
+
+- Buyer
+- Seller
+
+#### Plots
+
+Stores:
+
+- Plot ID
+- Seller ID
+- Title
+- Location
+- Area
+- Price
+- Road width
+- Property type
+- Facing
+- Landmark
+- Description
+- Status
+- Created date
+
+#### Plot Images
+
+Stores uploaded plot images.
+
+#### Favorites
+
+Stores the plots saved by buyers.
+
+#### Inquiries
+
+Stores communication between buyers and sellers.
+
+---
+
+## 📁 Project Structure
 
 ```text
 SmartPlot/
@@ -151,21 +269,24 @@ SmartPlot/
 ├── database/
 │   └── smartplot.db
 │
+├── uploads/
+│   └── plots/
+│
 ├── templates/
 │   ├── index.html
 │   ├── login.html
 │   ├── signup.html
 │   ├── forgot_password.html
 │   ├── dashboard.html
-│   ├── plots.html
-│   ├── plot_details.html
-│   ├── favorites.html
 │   ├── add_plot.html
 │   ├── my_listings.html
+│   ├── plots.html
+│   ├── favorites.html
+│   ├── plot_details.html
 │   ├── inquiries.html
 │   ├── seller_statistics.html
 │   ├── modify_account.html
 │   └── 404.html
 │
-└── uploads/
-    └── plots/
+└── static/
+    └── ...
