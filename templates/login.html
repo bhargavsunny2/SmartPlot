@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SmartPlot - Login</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at 50% 25%,
+                    rgba(34, 115, 190, 0.35),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 10% 90%,
+                    rgba(0, 255, 180, 0.08),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #020b1d 0%,
+                    #061938 45%,
+                    #092b55 100%
+                );
+
+            overflow-y: auto;
+        }
+
+
+        /* Background glow */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            width: 500px;
+            height: 500px;
+
+            border-radius: 50%;
+
+            top: -230px;
+            right: -180px;
+
+            background:
+                rgba(30, 130, 220, 0.15);
+
+            filter: blur(40px);
+
+            pointer-events: none;
+        }
+
+
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            width: 450px;
+            height: 450px;
+
+            border-radius: 50%;
+
+            bottom: -230px;
+            left: -180px;
+
+            background:
+                rgba(0, 255, 150, 0.06);
+
+            filter: blur(45px);
+
+            pointer-events: none;
+        }
+
+
+        /* Stars */
+
+        .stars {
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            opacity: 0.5;
+
+            background-image:
+
+                radial-gradient(
+                    circle at 10% 12%,
+                    white 1px,
+                    transparent 2px
+                ),
+
+                radial-gradient(
+                    circle at 22% 30%,
+                    #8ecfff 1px,
+                    transparent 2px
+                ),
+
+                radial-gradient(
+                    circle at 35% 8%,
+                    white 1px,
+                    transparent 2px
+                ),
+
+                radial-gradient(
+                    circle at 48% 22%,
+                    #8ecfff 1px,
+                    transparent 2px
+                ),
+
+                radial-gradient(
+                    circle at 67% 12%,
+                    white 1px,
+                    transparent 2px
+                ),
+
+                radial-gradient(
+                    circle at 80% 27%,
+                    #8ecfff 1px,
+                    transparent 2px
+                ),
+
+                radial-gradient(
+                    circle at 92% 10%,
+                    white 1px,
+                    transparent 2px
+                );
+        }
+
+
+        /* Main */
+
+        .container {
+
+            width: 100%;
+
+            max-width: 470px;
+
+            padding: 25px;
+
+            position: relative;
+
+            z-index: 5;
+        }
+
+
+        /* Card */
+
+        .card {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(13, 43, 79, 0.97),
+                    rgba(5, 23, 49, 0.98)
+                );
+
+            border:
+                1px solid rgba(78, 171, 235, 0.75);
+
+            border-radius: 22px;
+
+            padding: 38px 38px;
+
+            box-shadow:
+                0 0 25px
+                rgba(37, 150, 220, 0.18),
+
+                0 25px 80px
+                rgba(0,0,0,0.55);
+
+            backdrop-filter: blur(15px);
+        }
+
+
+        /* Logo */
+
+        .logo {
+
+            text-align: center;
+
+            font-size: 36px;
+
+            font-weight: 900;
+
+            letter-spacing: -1px;
+
+            color: white;
+
+            text-shadow:
+                0 0 15px rgba(255,255,255,0.15);
+
+            margin-bottom: 6px;
+        }
+
+        .logo span {
+
+            color: #39ff14;
+
+            text-shadow:
+                0 0 12px
+                rgba(57,255,20,0.45);
+        }
+
+
+        .subtitle {
+
+            text-align: center;
+
+            color: #d3e5f5;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            margin-bottom: 30px;
+        }
+
+
+        h1 {
+
+            text-align: center;
+
+            font-size: 27px;
+
+            margin:
+                0 0 25px;
+
+            color: white;
+        }
+
+
+        /* Error */
+
+        .error {
+
+            background:
+                rgba(220, 38, 38, 0.15);
+
+            border:
+                1px solid rgba(248,113,113,0.55);
+
+            color: #ffb4b4;
+
+            padding: 12px;
+
+            border-radius: 9px;
+
+            margin-bottom: 18px;
+
+            text-align: center;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        /* Form */
+
+        .form-group {
+
+            margin-bottom: 19px;
+        }
+
+
+        label {
+
+            display: block;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            margin-bottom: 8px;
+        }
+
+
+        input {
+
+            width: 100%;
+
+            height: 53px;
+
+            padding: 0 16px;
+
+            border-radius: 10px;
+
+            border:
+                1px solid #68a9cf;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #327ca9,
+                    #286d99
+                );
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 500;
+
+            box-shadow:
+                inset 0 1px 4px
+                rgba(0,0,0,0.15);
+
+            transition: 0.2s;
+        }
+
+
+        input::placeholder {
+
+            color:
+                rgba(255,255,255,0.88);
+        }
+
+
+        input:focus {
+
+            outline: none;
+
+            border-color:
+                #8bd1ff;
+
+            box-shadow:
+
+                0 0 0 3px
+                rgba(77,171,230,0.18),
+
+                0 0 14px
+                rgba(66,160,220,0.20);
+        }
+
+
+        /* Forgot */
+
+        .forgot {
+
+            display: block;
+
+            text-align: right;
+
+            margin-top: -8px;
+
+            margin-bottom: 20px;
+
+            color: #72c4ff;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .forgot:hover {
+
+            color: #39ff14;
+
+        }
+
+
+        /* Button */
+
+        .login-btn {
+
+            width: 100%;
+
+            height: 54px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #39ff14,
+                    #20d900
+                );
+
+            color: #06200a;
+
+            font-size: 16px;
+
+            font-weight: 900;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 0 18px
+                rgba(57,255,20,0.20);
+
+            transition: 0.2s;
+        }
+
+
+        .login-btn:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 0 25px
+                rgba(57,255,20,0.38);
+        }
+
+
+        /* Signup */
+
+        .signup-link {
+
+            text-align: center;
+
+            margin-top: 22px;
+
+            padding-top: 20px;
+
+            border-top:
+                1px solid
+                rgba(130,180,220,0.18);
+
+            color: #c5d8e9;
+
+            font-size: 14px;
+        }
+
+
+        .signup-link a {
+
+            color: #39ff14;
+
+            text-decoration: none;
+
+            font-weight: 900;
+        }
+
+
+        .signup-link a:hover {
+
+            text-decoration: underline;
+        }
+
+
+        .bottom-text {
+
+            text-align: center;
+
+            color:
+                rgba(220,235,250,0.72);
+
+            font-size: 12px;
+
+            margin-top: 15px;
+        }
+
+
+        @media(max-width:600px) {
+
+            .container {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 30px 23px;
+            }
+
+            .logo {
+                font-size: 31px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="stars"></div>
+
+
+    <div class="container">
+
+        <div class="card">
+
+
+            <div class="logo">
+                🏠 Smart<span>Plot</span>
+            </div>
+
+
+            <div class="subtitle">
+                Find Plots. Connect Directly with Owners.
+            </div>
+
+
+            <h1>
+                Welcome Back
+            </h1>
+
+
+            {% if error %}
+
+            <div class="error">
+                {{ error }}
+            </div>
+
+            {% endif %}
+
+
+            {% if success %}
+
+            <div class="success">
+                {{ success }}
+            </div>
+
+            {% endif %}
+
+
+            <form method="POST">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                </div>
+
+
+                <a
+                    href="{{ url_for('forgot_password') }}"
+                    class="forgot"
+                >
+                    Forgot Password?
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="login-btn"
+                >
+                    Login to SmartPlot
+                </button>
+
+
+            </form>
+
+
+            <div class="signup-link">
+
+                Don't have an account?
+
+                <a href="{{ url_for('signup') }}">
+                    Create Account
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="bottom-text">
+            SmartPlot • Smart Property Discovery
+        </div>
+
+    </div>
+
+</body>
+
+</html>

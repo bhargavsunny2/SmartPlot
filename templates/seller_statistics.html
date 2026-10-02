@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Seller Statistics - SmartPlot</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(8, 25, 45, 0.94),
+                    rgba(18, 66, 85, 0.90)
+                ),
+                url("https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=2000&q=80");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+
+            color: white;
+        }
+
+        .navbar {
+            width: 100%;
+            padding: 18px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(255,255,255,0.10);
+
+            backdrop-filter: blur(15px);
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.18);
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            color: white;
+            text-decoration: none;
+
+            padding: 10px 17px;
+
+            border-radius: 22px;
+
+            background:
+                rgba(255,255,255,0.10);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.18);
+
+            transition: 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: white;
+            color: #123c50;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1100px;
+
+            margin: 45px auto 70px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color:
+                rgba(255,255,255,0.65);
+        }
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .stat-card {
+            padding: 28px;
+
+            min-height: 170px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,255,255,0.11);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.20);
+
+            backdrop-filter: blur(15px);
+
+            box-shadow:
+                0 15px 35px
+                rgba(0,0,0,0.18);
+
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+
+            background:
+                rgba(255,255,255,0.16);
+        }
+
+        .icon {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .label {
+            color:
+                rgba(255,255,255,0.62);
+
+            font-size: 14px;
+
+            margin-bottom: 8px;
+        }
+
+        .value {
+            font-size: 34px;
+            font-weight: 800;
+        }
+
+        .back-section {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .back-btn {
+            display: inline-block;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 12px 22px;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,0.10);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.20);
+
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background:
+                rgba(255,255,255,0.18);
+
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 850px) {
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px 5%;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+            .container {
+                margin-top: 30px;
+            }
+
+            .header h1 {
+                font-size: 30px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<nav class="navbar">
+
+    <div class="logo">
+        🏡 SmartPlot
+    </div>
+
+    <div class="nav-buttons">
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="nav-btn"
+        >
+            Dashboard
+        </a>
+
+        <a
+            href="{{ url_for('my_listings') }}"
+            class="nav-btn"
+        >
+            My Listings
+        </a>
+
+        <a
+            href="{{ url_for('inquiries') }}"
+            class="nav-btn"
+        >
+            Inquiries
+        </a>
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="nav-btn"
+        >
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+
+    <section class="header">
+
+        <h1>
+            📊 Seller Statistics
+        </h1>
+
+        <p>
+            Overview of your SmartPlot properties
+            and buyer activity.
+        </p>
+
+    </section>
+
+
+    <section class="stats-grid">
+
+
+        <div class="stat-card">
+
+            <div class="icon">
+                🏡
+            </div>
+
+            <div class="label">
+                Total Listings
+            </div>
+
+            <div class="value">
+                {{ statistics["total_listings"] }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="icon">
+                🟢
+            </div>
+
+            <div class="label">
+                Available Listings
+            </div>
+
+            <div class="value">
+                {{ statistics["available_listings"] }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="icon">
+                🟡
+            </div>
+
+            <div class="label">
+                Reserved Listings
+            </div>
+
+            <div class="value">
+                {{ statistics["reserved_listings"] }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="icon">
+                🔴
+            </div>
+
+            <div class="label">
+                Sold Listings
+            </div>
+
+            <div class="value">
+                {{ statistics["sold_listings"] }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="icon">
+                🔔
+            </div>
+
+            <div class="label">
+                Buyer Inquiries
+            </div>
+
+            <div class="value">
+                {{ statistics["total_inquiries"] }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="icon">
+                ❤️
+            </div>
+
+            <div class="label">
+                Total Favorites
+            </div>
+
+            <div class="value">
+                {{ statistics["total_favorites"] }}
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <div class="back-section">
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="back-btn"
+        >
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>
