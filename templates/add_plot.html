@@ -1120,10 +1120,14 @@
                         You can select multiple images.
                     </p>
 
+                    <!-- IMPORTANT:
+                         app.py uses request.files.getlist("images")
+                    -->
+
                     <input
                         type="file"
-                        name="photos"
-                        id="photos"
+                        name="images"
+                        id="images"
                         class="file-input"
                         accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
                         multiple
