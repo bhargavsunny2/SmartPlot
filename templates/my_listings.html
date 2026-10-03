@@ -10,88 +10,94 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>SmartPlot - My Listings</title>
-
+    <title>My Listings - SmartPlot</title>
 
     <style>
 
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
-
 
         body {
 
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
             min-height: 100vh;
 
-            font-family: Arial, sans-serif;
-
-            color: white;
-
             background:
-                radial-gradient(
-                    circle at 15% 15%,
-                    rgba(34, 197, 94, 0.14),
-                    transparent 25%
-                ),
-                radial-gradient(
-                    circle at 85% 80%,
-                    rgba(34, 211, 238, 0.14),
-                    transparent 25%
-                ),
                 linear-gradient(
                     135deg,
-                    #020617,
-                    #0f172a,
-                    #12324a,
-                    #064e3b
-                );
+                    rgba(8, 25, 45, 0.94),
+                    rgba(18, 66, 85, 0.90)
+                ),
+                url("https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=2000&q=80");
 
-            padding-bottom: 40px;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+
+            color: white;
         }
 
 
+        /* =========================
+           NAVBAR
+        ========================= */
+
         .navbar {
+
+            width: 100%;
+
+            padding:
+                18px 7%;
 
             display: flex;
 
-            justify-content: space-between;
+            justify-content:
+                space-between;
 
             align-items: center;
 
-            padding: 20px 6%;
+            gap: 15px;
 
             background:
-                rgba(255,255,255,0.06);
+                rgba(255,255,255,0.10);
+
+            backdrop-filter:
+                blur(15px);
 
             border-bottom:
-                1px solid rgba(255,255,255,0.10);
+                1px solid
+                rgba(255,255,255,0.18);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
         }
 
 
         .logo {
 
-            font-size: 28px;
+            font-size: 26px;
 
-            font-weight: bold;
+            font-weight: 800;
         }
 
 
-        .logo span {
-
-            color: #4ade80;
-        }
-
-
-        .nav-links {
+        .nav-buttons {
 
             display: flex;
 
             gap: 10px;
 
-            align-items: center;
+            flex-wrap: wrap;
         }
 
 
@@ -99,126 +105,201 @@
 
             text-decoration: none;
 
-            color: #cbd5e1;
+            color: white;
 
-            padding: 9px 14px;
+            padding:
+                10px 16px;
 
-            border-radius: 9px;
+            border-radius: 22px;
 
             background:
-                rgba(255,255,255,0.07);
+                rgba(255,255,255,0.10);
 
             border:
-                1px solid rgba(255,255,255,0.14);
+                1px solid
+                rgba(255,255,255,0.18);
 
-            font-size: 13px;
+            transition: 0.3s;
         }
 
+
+        .nav-btn:hover {
+
+            background: white;
+
+            color: #123c50;
+        }
+
+
+        /* =========================
+           CONTAINER
+        ========================= */
 
         .container {
 
-            max-width: 1150px;
+            width: 92%;
 
-            margin: 40px auto;
+            max-width: 1200px;
 
-            padding: 0 20px;
+            margin:
+                40px auto 60px;
         }
 
 
-        .heading {
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
+        .page-header {
 
             margin-bottom: 30px;
-
-            gap: 20px;
         }
 
 
-        .heading h1 {
+        .page-header h1 {
 
-            font-size: 34px;
+            font-size: 36px;
 
             margin-bottom: 8px;
         }
 
 
-        .heading p {
+        .page-header p {
 
-            color: #94a3b8;
+            color:
+                rgba(255,255,255,0.65);
+        }
 
-            font-size: 14px;
+
+        /* =========================
+           ADD BUTTON
+        ========================= */
+
+        .top-actions {
+
+            margin-bottom: 25px;
         }
 
 
         .add-btn {
 
+            display: inline-block;
+
             text-decoration: none;
 
-            color: white;
+            color: #123c50;
 
-            padding: 12px 18px;
+            background: white;
 
-            border-radius: 10px;
+            padding:
+                13px 20px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #22c55e,
-                    #10b981
-                );
+            border-radius: 12px;
 
-            font-weight: bold;
+            font-weight: 800;
 
-            white-space: nowrap;
+            transition: 0.3s;
         }
 
 
-        .plot-grid {
+        .add-btn:hover {
 
-            display: grid;
+            transform:
+                translateY(-2px);
 
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 20px;
+            box-shadow:
+                0 8px 20px
+                rgba(0,0,0,0.20);
         }
 
 
-        .plot-card {
+        /* =========================
+           EMPTY
+        ========================= */
 
-            padding: 22px;
+        .empty {
 
-            border-radius: 18px;
+            text-align: center;
+
+            padding: 60px 20px;
 
             background:
-                rgba(255,255,255,0.08);
+                rgba(255,255,255,0.10);
 
             border:
-                1px solid rgba(255,255,255,0.14);
+                1px solid
+                rgba(255,255,255,0.18);
 
-            backdrop-filter:
-                blur(14px);
+            border-radius: 20px;
         }
 
 
-        .plot-id {
+        .empty-icon {
 
-            color: #67e8f9;
+            font-size: 55px;
 
-            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+
+        .empty h2 {
 
             margin-bottom: 10px;
         }
 
 
-        .plot-card h2 {
+        .empty p {
 
-            font-size: 21px;
+            color:
+                rgba(255,255,255,0.60);
+
+            margin-bottom: 20px;
+        }
+
+
+        /* =========================
+           LISTINGS GRID
+        ========================= */
+
+        .listings {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(300px, 1fr)
+                );
+
+            gap: 22px;
+        }
+
+
+        /* =========================
+           CARD
+        ========================= */
+
+        .card {
+
+            background:
+                rgba(255,255,255,0.12);
+
+            backdrop-filter:
+                blur(18px);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.20);
+
+            border-radius: 20px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 18px 40px
+                rgba(0,0,0,0.18);
+        }
+
+
+        .card h2 {
+
+            font-size: 22px;
 
             margin-bottom: 8px;
         }
@@ -226,13 +307,16 @@
 
         .location {
 
-            color: #cbd5e1;
+            color:
+                rgba(255,255,255,0.65);
 
             margin-bottom: 18px;
-
-            font-size: 14px;
         }
 
+
+        /* =========================
+           DETAILS
+        ========================= */
 
         .details {
 
@@ -249,20 +333,21 @@
 
         .detail {
 
-            padding: 10px;
-
-            border-radius: 9px;
-
             background:
-                rgba(0,0,0,0.18);
+                rgba(255,255,255,0.07);
+
+            padding: 12px;
+
+            border-radius: 10px;
         }
 
 
         .detail-label {
 
-            color: #94a3b8;
+            font-size: 12px;
 
-            font-size: 11px;
+            color:
+                rgba(255,255,255,0.50);
 
             margin-bottom: 5px;
         }
@@ -270,223 +355,256 @@
 
         .detail-value {
 
-            font-weight: bold;
+            font-weight: 700;
 
-            font-size: 14px;
+            font-size: 15px;
         }
 
 
         .price {
 
-            font-size: 23px;
+            font-size: 26px;
 
-            font-weight: bold;
+            font-weight: 800;
 
-            color: #86efac;
-
-            margin-bottom: 5px;
+            margin:
+                12px 0;
         }
 
 
-        .price-per {
-
-            color: #67e8f9;
-
-            font-size: 13px;
-
-            margin-bottom: 18px;
-        }
-
+        /* =========================
+           STATUS
+        ========================= */
 
         .status {
 
             display: inline-block;
 
-            padding: 7px 12px;
+            padding:
+                7px 12px;
 
             border-radius: 20px;
 
             font-size: 12px;
 
-            font-weight: bold;
+            font-weight: 800;
 
-            text-transform: uppercase;
+            margin-bottom: 18px;
 
-            margin-bottom: 15px;
+            text-transform: capitalize;
         }
 
 
-        .available {
+        .status.available {
 
             background:
-                rgba(34,197,94,0.14);
+                rgba(34,197,94,0.18);
 
-            color: #86efac;
-
-            border:
-                1px solid rgba(34,197,94,0.25);
+            color:
+                #86efac;
         }
 
 
-        .reserved {
+        .status.reserved {
 
             background:
-                rgba(250,204,21,0.12);
+                rgba(245,158,11,0.18);
 
-            color: #fde68a;
-
-            border:
-                1px solid rgba(250,204,21,0.25);
+            color:
+                #fcd34d;
         }
 
 
-        .sold {
+        .status.sold {
 
             background:
-                rgba(239,68,68,0.13);
+                rgba(239,68,68,0.18);
 
-            color: #fca5a5;
-
-            border:
-                1px solid rgba(239,68,68,0.25);
+            color:
+                #fca5a5;
         }
 
+
+        /* =========================
+           BUTTONS
+        ========================= */
 
         .actions {
 
-            display: grid;
-
-            grid-template-columns:
-                1fr 1fr;
+            display: flex;
 
             gap: 8px;
+
+            flex-wrap: wrap;
+
+            margin-top: 15px;
         }
 
 
-        .action {
+        /*
+           IMPORTANT:
 
-            text-decoration: none;
+           These are FORMS, not <a href> links.
 
-            text-align: center;
+           Flask expects POST requests.
+        */
 
-            padding: 10px 8px;
+        .action-form {
 
-            border-radius: 8px;
+            margin: 0;
+        }
+
+
+        .btn {
+
+            border: none;
+
+            cursor: pointer;
+
+            padding:
+                10px 14px;
+
+            border-radius: 10px;
 
             color: white;
 
-            background:
-                rgba(255,255,255,0.08);
+            font-weight: 700;
 
-            border:
-                1px solid rgba(255,255,255,0.12);
+            font-size: 13px;
 
-            font-size: 12px;
+            transition: 0.25s;
         }
 
 
-        .action:hover {
+        .btn:hover {
 
-            background:
-                rgba(255,255,255,0.14);
+            transform:
+                translateY(-2px);
         }
 
 
-        .delete {
-
-            color: #fca5a5;
-
-            border-color:
-                rgba(239,68,68,0.20);
-        }
-
-
-        .empty {
-
-            padding: 60px 20px;
-
-            text-align: center;
-
-            border-radius: 20px;
+        .available-btn {
 
             background:
-                rgba(255,255,255,0.07);
-
-            border:
-                1px solid rgba(255,255,255,0.12);
+                #16a34a;
         }
 
 
-        .empty-icon {
+        .reserved-btn {
 
-            font-size: 50px;
-
-            margin-bottom: 15px;
+            background:
+                #d97706;
         }
 
 
-        .empty h2 {
+        .sold-btn {
 
-            margin-bottom: 10px;
+            background:
+                #dc2626;
         }
 
 
-        .empty p {
+        .delete-btn {
 
-            color: #94a3b8;
-
-            margin-bottom: 20px;
+            background:
+                #7f1d1d;
         }
 
 
-        @media (max-width: 900px) {
+        .view-btn {
 
-            .plot-grid {
+            display: inline-block;
 
-                grid-template-columns:
-                    repeat(2, 1fr);
-            }
+            text-decoration: none;
 
+            background:
+                #2563eb;
+
+            color: white;
+
+            padding:
+                10px 14px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            transition: 0.25s;
         }
 
 
-        @media (max-width: 600px) {
+        .view-btn:hover {
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 700px) {
 
             .navbar {
 
-                padding: 17px 5%;
+                padding:
+                    15px 5%;
+
+                align-items:
+                    flex-start;
             }
 
 
             .logo {
 
-                font-size: 23px;
+                font-size: 21px;
             }
 
 
-            .nav-links {
+            .nav-btn {
 
-                gap: 5px;
+                padding:
+                    8px 10px;
+
+                font-size: 12px;
             }
 
 
-            .heading {
+            .container {
 
-                flex-direction: column;
+                width: 94%;
 
-                align-items: flex-start;
+                margin-top: 25px;
             }
 
 
-            .heading h1 {
+            .page-header h1 {
 
-                font-size: 28px;
+                font-size: 29px;
             }
 
 
-            .plot-grid {
+            .details {
 
                 grid-template-columns: 1fr;
+            }
+
+
+            .btn,
+            .view-btn {
+
+                width: 100%;
+
+                text-align: center;
+            }
+
+
+            .action-form {
+
+                width: 100%;
             }
 
         }
@@ -499,237 +617,237 @@
 <body>
 
 
-    <nav class="navbar">
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
 
-        <div class="logo">
+<nav class="navbar">
 
-            🏡 Smart<span>Plot</span>
-
-        </div>
-
-
-        <div class="nav-links">
-
-            <a
-                href="/dashboard"
-                class="nav-btn"
-            >
-
-                Dashboard
-
-            </a>
+    <div class="logo">
+        🏡 SmartPlot
+    </div>
 
 
-            <a
-                href="/logout"
-                class="nav-btn"
-            >
+    <div class="nav-buttons">
 
-                Logout
-
-            </a>
-
-        </div>
-
-    </nav>
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="nav-btn"
+        >
+            Dashboard
+        </a>
 
 
-    <main class="container">
+        <a
+            href="{{ url_for('add_plot') }}"
+            class="nav-btn"
+        >
+            ➕ Add Plot
+        </a>
 
 
-        <div class="heading">
+        <a
+            href="{{ url_for('inquiries') }}"
+            class="nav-btn"
+        >
+            🔔 Inquiries
+        </a>
 
-            <div>
 
-                <h1>
-                    My Listings
-                </h1>
+        <a
+            href="{{ url_for('logout') }}"
+            class="nav-btn"
+        >
+            Logout
+        </a>
 
-                <p>
-                    Manage the plots you have posted on SmartPlot.
-                </p>
+    </div>
 
+</nav>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="container">
+
+
+    <div class="page-header">
+
+        <h1>
+            🏠 My Listings
+        </h1>
+
+        <p>
+            Manage the plots you have published
+            on SmartPlot.
+        </p>
+
+    </div>
+
+
+
+    <!-- ADD PLOT -->
+
+    <div class="top-actions">
+
+        <a
+            href="{{ url_for('add_plot') }}"
+            class="add-btn"
+        >
+            ➕ Publish New Plot
+        </a>
+
+    </div>
+
+
+
+    <!-- =================================================
+         NO LISTINGS
+    ================================================= -->
+
+    {% if not plots %}
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                🏡
             </div>
 
+            <h2>
+                No plots listed yet
+            </h2>
+
+            <p>
+                Publish your first property
+                on SmartPlot.
+            </p>
 
             <a
-                href="/add-plot"
+                href="{{ url_for('add_plot') }}"
                 class="add-btn"
             >
-
-                + Add New Plot
-
+                ➕ Add Your First Plot
             </a>
 
         </div>
 
 
-        {% if plots %}
+    {% else %}
 
 
-            <div class="plot-grid">
+        <!-- =================================================
+             LISTINGS
+        ================================================= -->
+
+        <div class="listings">
 
 
-                {% for plot in plots %}
+            {% for plot in plots %}
+
+                <div class="card">
 
 
-                    <div class="plot-card">
+                    <h2>
+                        {{ plot["title"] }}
+                    </h2>
 
 
-                        <div class="plot-id">
-
-                            PLOT ID: SP{{ "%04d"|format(plot["id"]) }}
-
-                        </div>
+                    <div class="location">
+                        📍 {{ plot["location"] }}
+                    </div>
 
 
-                        <h2>
 
-                            {{ plot["title"] }}
+                    <!-- STATUS -->
 
-                        </h2>
-
-
-                        <div class="location">
-
-                            📍 {{ plot["location"] }}
-
-                        </div>
+                    <div
+                        class="status
+                        {{ plot['status'] }}"
+                    >
+                        {{ plot["status"] }}
+                    </div>
 
 
-                        <div class="price">
 
-                            ₹{{ "{:,.0f}".format(plot["price"]) }}
+                    <!-- DETAILS -->
 
-                        </div>
-
-
-                        <div class="price-per">
-
-                            ₹{{ "{:,.2f}".format(plot["price"] / plot["area"]) }}
-                            / sq.ft
-
-                        </div>
+                    <div class="details">
 
 
-                        <div class="details">
+                        <div class="detail">
 
+                            <div class="detail-label">
+                                Plot Area
+                            </div>
 
-                            <div class="detail">
+                            <div class="detail-value">
 
-                                <div class="detail-label">
-                                    AREA
-                                </div>
+                                {{ "{:,.0f}".format(
+                                    plot["area"] or 0
+                                ) }}
 
-                                <div class="detail-value">
-
-                                    {{ "{:,.0f}".format(plot["area"]) }}
-                                    sq.ft
-
-                                </div>
+                                sq.ft
 
                             </div>
 
+                        </div>
 
-                            <div class="detail">
 
-                                <div class="detail-label">
-                                    ROAD
-                                </div>
+                        <div class="detail">
 
-                                <div class="detail-value">
+                            <div class="detail-label">
+                                Property Type
+                            </div>
+
+                            <div class="detail-value">
+
+                                {{ plot["property_type"]
+                                   or "Not provided" }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <div class="detail-label">
+                                Facing
+                            </div>
+
+                            <div class="detail-value">
+
+                                {{ plot["facing"]
+                                   or "Not provided" }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <div class="detail-label">
+                                Road Width
+                            </div>
+
+                            <div class="detail-value">
+
+                                {% if plot["road_width"] %}
 
                                     {{ plot["road_width"] }}
                                     ft
 
-                                </div>
+                                {% else %}
+
+                                    Not provided
+
+                                {% endif %}
 
                             </div>
-
-
-                            <div class="detail">
-
-                                <div class="detail-label">
-                                    TYPE
-                                </div>
-
-                                <div class="detail-value">
-
-                                    {{ plot["property_type"] }}
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="detail">
-
-                                <div class="detail-label">
-                                    FACING
-                                </div>
-
-                                <div class="detail-value">
-
-                                    {{ plot["facing"] }}
-
-                                </div>
-
-                            </div>
-
-
-                        </div>
-
-
-                        <div class="status {{ plot['status'] }}">
-
-                            {{ plot["status"] }}
-
-                        </div>
-
-
-                        <div class="actions">
-
-
-                            <a
-                                href="/update-plot-status/{{ plot['id'] }}/available"
-                                class="action"
-                            >
-
-                                Available
-
-                            </a>
-
-
-                            <a
-                                href="/update-plot-status/{{ plot['id'] }}/reserved"
-                                class="action"
-                            >
-
-                                Reserved
-
-                            </a>
-
-
-                            <a
-                                href="/update-plot-status/{{ plot['id'] }}/sold"
-                                class="action"
-                            >
-
-                                Mark Sold
-
-                            </a>
-
-
-                            <a
-                                href="/delete-plot/{{ plot['id'] }}"
-                                class="action delete"
-                                onclick="return confirm('Are you sure you want to delete this listing?');"
-                            >
-
-                                Delete
-
-                            </a>
-
 
                         </div>
 
@@ -737,47 +855,148 @@
                     </div>
 
 
-                {% endfor %}
+
+                    <!-- PRICE -->
+
+                    <div class="price">
+
+                        ₹{{ "{:,.0f}".format(
+                            plot["price"] or 0
+                        ) }}
+
+                    </div>
 
 
-            </div>
+
+                    <!-- ACTIONS -->
+
+                    <div class="actions">
 
 
-        {% else %}
+                        <!-- VIEW -->
+
+                        <a
+                            href="{{ url_for(
+                                'plot_details',
+                                plot_id=plot['id']
+                            ) }}"
+                            class="view-btn"
+                        >
+                            👁️ View
+                        </a>
 
 
-            <div class="empty">
 
-                <div class="empty-icon">
-                    🏡
+                        <!-- AVAILABLE -->
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'update_status',
+                                plot_id=plot['id'],
+                                status='available'
+                            ) }}"
+                            class="action-form"
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn available-btn"
+                            >
+                                ✅ Available
+                            </button>
+
+                        </form>
+
+
+
+                        <!-- RESERVED -->
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'update_status',
+                                plot_id=plot['id'],
+                                status='reserved'
+                            ) }}"
+                            class="action-form"
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn reserved-btn"
+                            >
+                                🟠 Reserved
+                            </button>
+
+                        </form>
+
+
+
+                        <!-- SOLD -->
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'update_status',
+                                plot_id=plot['id'],
+                                status='sold'
+                            ) }}"
+                            class="action-form"
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn sold-btn"
+                            >
+                                🔴 Mark Sold
+                            </button>
+
+                        </form>
+
+
+
+                        <!-- DELETE -->
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'delete_plot',
+                                plot_id=plot['id']
+                            ) }}"
+                            class="action-form"
+                            onsubmit="
+                                return confirm(
+                                    'Are you sure you want to delete this plot?'
+                                );
+                            "
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn delete-btn"
+                            >
+                                🗑️ Delete
+                            </button>
+
+                        </form>
+
+
+                    </div>
+
+
                 </div>
 
-                <h2>
-                    No plots listed yet
-                </h2>
-
-                <p>
-                    Add your first plot and make it
-                    visible to SmartPlot buyers.
-                </p>
+            {% endfor %}
 
 
-                <a
-                    href="/add-plot"
-                    class="add-btn"
-                >
-
-                    + List Your First Plot
-
-                </a>
-
-            </div>
+        </div>
 
 
-        {% endif %}
+    {% endif %}
 
 
-    </main>
+</main>
 
 
 </body>
