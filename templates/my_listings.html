@@ -5,20 +5,28 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>My Listings - SmartPlot</title>
 
+
     <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
+
+
+        /* =====================================================
+           BODY
+        ===================================================== */
 
         body {
 
@@ -30,24 +38,30 @@
             min-height: 100vh;
 
             background:
+
                 linear-gradient(
                     135deg,
-                    rgba(8, 25, 45, 0.94),
-                    rgba(18, 66, 85, 0.90)
+                    rgba(8, 25, 45, 0.95),
+                    rgba(18, 66, 85, 0.92)
                 ),
-                url("https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=2000&q=80");
+
+                url(
+                    "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=2000&q=80"
+                );
 
             background-size: cover;
+
             background-position: center;
+
             background-attachment: fixed;
 
             color: white;
         }
 
 
-        /* =========================
+        /* =====================================================
            NAVBAR
-        ========================= */
+        ===================================================== */
 
         .navbar {
 
@@ -63,7 +77,7 @@
 
             align-items: center;
 
-            gap: 15px;
+            gap: 20px;
 
             background:
                 rgba(255,255,255,0.10);
@@ -88,12 +102,16 @@
             font-size: 26px;
 
             font-weight: 800;
+
+            white-space: nowrap;
         }
 
 
-        .nav-buttons {
+        .nav-right {
 
             display: flex;
+
+            align-items: center;
 
             gap: 10px;
 
@@ -101,11 +119,11 @@
         }
 
 
-        .nav-btn {
-
-            text-decoration: none;
+        .nav-right a {
 
             color: white;
+
+            text-decoration: none;
 
             padding:
                 10px 16px;
@@ -119,42 +137,53 @@
                 1px solid
                 rgba(255,255,255,0.18);
 
-            transition: 0.3s;
+            transition:
+                0.25s;
         }
 
 
-        .nav-btn:hover {
+        .nav-right a:hover {
 
             background: white;
 
-            color: #123c50;
+            color:
+                #123c50;
+
+            transform:
+                translateY(-1px);
         }
 
 
-        /* =========================
-           CONTAINER
-        ========================= */
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
 
         .container {
 
             width: 92%;
 
-            max-width: 1200px;
+            max-width: 1250px;
 
             margin:
-                40px auto 60px;
+                40px auto 70px;
         }
 
 
+        /* =====================================================
+           PAGE HEADER
+        ===================================================== */
+
         .page-header {
 
-            margin-bottom: 30px;
+            margin-bottom: 28px;
         }
 
 
         .page-header h1 {
 
             font-size: 36px;
+
+            font-weight: 800;
 
             margin-bottom: 8px;
         }
@@ -164,60 +193,31 @@
 
             color:
                 rgba(255,255,255,0.65);
+
+            font-size: 16px;
+
+            line-height: 1.5;
         }
 
 
-        /* =========================
-           ADD BUTTON
-        ========================= */
+        /* =====================================================
+           BACK BUTTON
+        ===================================================== */
 
-        .top-actions {
-
-            margin-bottom: 25px;
-        }
-
-
-        .add-btn {
+        .back {
 
             display: inline-block;
 
+            margin-bottom: 22px;
+
+            color: white;
+
             text-decoration: none;
 
-            color: #123c50;
-
-            background: white;
-
             padding:
-                13px 20px;
+                10px 16px;
 
-            border-radius: 12px;
-
-            font-weight: 800;
-
-            transition: 0.3s;
-        }
-
-
-        .add-btn:hover {
-
-            transform:
-                translateY(-2px);
-
-            box-shadow:
-                0 8px 20px
-                rgba(0,0,0,0.20);
-        }
-
-
-        /* =========================
-           EMPTY
-        ========================= */
-
-        .empty {
-
-            text-align: center;
-
-            padding: 60px 20px;
+            border-radius: 10px;
 
             background:
                 rgba(255,255,255,0.10);
@@ -226,7 +226,103 @@
                 1px solid
                 rgba(255,255,255,0.18);
 
-            border-radius: 20px;
+            transition:
+                0.25s;
+        }
+
+
+        .back:hover {
+
+            background:
+                rgba(255,255,255,0.18);
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        /* =====================================================
+           FLASH MESSAGES
+        ===================================================== */
+
+        .flash-container {
+
+            margin-bottom: 25px;
+        }
+
+
+        .flash {
+
+            padding:
+                14px 18px;
+
+            border-radius: 12px;
+
+            margin-bottom: 10px;
+
+            line-height: 1.5;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.15);
+
+            background:
+                rgba(255,255,255,0.08);
+        }
+
+
+        .flash.success {
+
+            background:
+                rgba(22,163,74,0.15);
+
+            border-color:
+                rgba(74,222,128,0.30);
+
+            color:
+                #bbf7d0;
+        }
+
+
+        .flash.error {
+
+            background:
+                rgba(239,68,68,0.15);
+
+            border-color:
+                rgba(248,113,113,0.30);
+
+            color:
+                #fecaca;
+        }
+
+
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+        .empty-card {
+
+            padding:
+                60px 25px;
+
+            text-align: center;
+
+            border-radius: 22px;
+
+            background:
+                rgba(255,255,255,0.10);
+
+            backdrop-filter:
+                blur(18px);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.18);
+
+            box-shadow:
+                0 20px 45px
+                rgba(0,0,0,0.20);
         }
 
 
@@ -238,87 +334,209 @@
         }
 
 
-        .empty h2 {
+        .empty-card h2 {
+
+            font-size: 25px;
 
             margin-bottom: 10px;
         }
 
 
-        .empty p {
+        .empty-card p {
 
             color:
                 rgba(255,255,255,0.60);
 
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
 
-        /* =========================
-           LISTINGS GRID
-        ========================= */
+        .add-first-btn {
 
-        .listings {
+            display: inline-block;
+
+            padding:
+                13px 22px;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #0ea5e9
+                );
+
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           LISTINGS GRID
+        ===================================================== */
+
+        .listings-grid {
 
             display: grid;
 
             grid-template-columns:
                 repeat(
                     auto-fit,
-                    minmax(300px, 1fr)
+                    minmax(320px, 1fr)
                 );
 
-            gap: 22px;
+            gap: 24px;
         }
 
 
-        /* =========================
-           CARD
-        ========================= */
+        /* =====================================================
+           LISTING CARD
+        ===================================================== */
 
-        .card {
+        .listing-card {
 
             background:
-                rgba(255,255,255,0.12);
+                rgba(255,255,255,0.11);
 
             backdrop-filter:
                 blur(18px);
 
             border:
                 1px solid
-                rgba(255,255,255,0.20);
+                rgba(255,255,255,0.18);
 
             border-radius: 20px;
 
-            padding: 22px;
+            overflow: hidden;
 
             box-shadow:
-                0 18px 40px
-                rgba(0,0,0,0.18);
+                0 20px 45px
+                rgba(0,0,0,0.20);
+
+            transition:
+                0.25s;
         }
 
 
-        .card h2 {
+        .listing-card:hover {
+
+            transform:
+                translateY(-4px);
+
+            border-color:
+                rgba(255,255,255,0.28);
+
+            box-shadow:
+                0 25px 55px
+                rgba(0,0,0,0.28);
+        }
+
+
+        /* =====================================================
+           IMAGE
+        ===================================================== */
+
+        .listing-image {
+
+            width: 100%;
+
+            height: 220px;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+
+        .no-image {
+
+            height: 220px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                rgba(255,255,255,0.07);
+
+            color:
+                rgba(255,255,255,0.55);
+
+            font-size: 18px;
+        }
+
+
+        /* =====================================================
+           CARD CONTENT
+        ===================================================== */
+
+        .listing-content {
+
+            padding: 22px;
+        }
+
+
+        .listing-title {
 
             font-size: 22px;
 
+            font-weight: 800;
+
             margin-bottom: 8px;
+
+            line-height: 1.3;
         }
 
 
-        .location {
+        .listing-location {
 
             color:
-                rgba(255,255,255,0.65);
+                rgba(255,255,255,0.62);
+
+            font-size: 14px;
+
+            margin-bottom: 18px;
+
+            line-height: 1.4;
+        }
+
+
+        /* =====================================================
+           PRICE
+        ===================================================== */
+
+        .listing-price {
+
+            font-size: 27px;
+
+            font-weight: 800;
+
+            margin-bottom: 5px;
+        }
+
+
+        .price-label {
+
+            color:
+                rgba(255,255,255,0.55);
+
+            font-size: 13px;
 
             margin-bottom: 18px;
         }
 
 
-        /* =========================
+        /* =====================================================
            DETAILS
-        ========================= */
+        ===================================================== */
 
-        .details {
+        .details-grid {
 
             display: grid;
 
@@ -327,161 +545,266 @@
 
             gap: 10px;
 
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
 
 
-        .detail {
+        .detail-box {
+
+            padding:
+                12px;
+
+            border-radius: 11px;
 
             background:
                 rgba(255,255,255,0.07);
 
-            padding: 12px;
-
-            border-radius: 10px;
+            border:
+                1px solid
+                rgba(255,255,255,0.10);
         }
 
 
         .detail-label {
 
-            font-size: 12px;
+            font-size: 11px;
 
             color:
-                rgba(255,255,255,0.50);
+                rgba(255,255,255,0.48);
 
             margin-bottom: 5px;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                0.4px;
         }
 
 
         .detail-value {
 
+            font-size: 14px;
+
             font-weight: 700;
-
-            font-size: 15px;
         }
 
 
-        .price {
+        /* =====================================================
+           STATUS AREA
+        ===================================================== */
 
-            font-size: 26px;
-
-            font-weight: 800;
-
-            margin:
-                12px 0;
-        }
-
-
-        /* =========================
-           STATUS
-        ========================= */
-
-        .status {
-
-            display: inline-block;
+        .status-area {
 
             padding:
-                7px 12px;
+                15px;
 
-            border-radius: 20px;
+            border-radius: 14px;
 
-            font-size: 12px;
+            background:
+                rgba(255,255,255,0.055);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.10);
+
+            margin-bottom: 15px;
+        }
+
+
+        .status-heading {
+
+            font-size: 11px;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                0.7px;
+
+            color:
+                rgba(255,255,255,0.45);
+
+            margin-bottom: 9px;
+        }
+
+
+        /* =====================================================
+           STATUS BADGES
+        ===================================================== */
+
+        .status-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding:
+                8px 14px;
+
+            border-radius: 30px;
+
+            font-size: 13px;
 
             font-weight: 800;
 
-            margin-bottom: 18px;
-
-            text-transform: capitalize;
+            margin-bottom: 14px;
         }
 
 
-        .status.available {
+        .status-dot {
 
-            background:
-                rgba(34,197,94,0.18);
+            width: 8px;
+
+            height: 8px;
+
+            border-radius: 50%;
+
+            display: inline-block;
+        }
+
+
+        /* AVAILABLE */
+
+        .status-badge.available {
 
             color:
-                #86efac;
-        }
-
-
-        .status.reserved {
+                #bbf7d0;
 
             background:
-                rgba(245,158,11,0.18);
+                rgba(34,197,94,0.14);
 
-            color:
-                #fcd34d;
+            border:
+                1px solid
+                rgba(34,197,94,0.28);
         }
 
 
-        .status.sold {
+        .status-badge.available
+        .status-dot {
 
             background:
-                rgba(239,68,68,0.18);
+                #22c55e;
 
-            color:
-                #fca5a5;
+            box-shadow:
+                0 0 8px
+                rgba(34,197,94,0.8);
         }
 
 
-        /* =========================
-           BUTTONS
-        ========================= */
+        /* RESERVED */
 
-        .actions {
+        .status-badge.reserved {
 
-            display: flex;
+            color:
+                #fde68a;
+
+            background:
+                rgba(245,158,11,0.14);
+
+            border:
+                1px solid
+                rgba(245,158,11,0.28);
+        }
+
+
+        .status-badge.reserved
+        .status-dot {
+
+            background:
+                #f59e0b;
+
+            box-shadow:
+                0 0 8px
+                rgba(245,158,11,0.8);
+        }
+
+
+        /* SOLD */
+
+        .status-badge.sold {
+
+            color:
+                #fecaca;
+
+            background:
+                rgba(239,68,68,0.14);
+
+            border:
+                1px solid
+                rgba(239,68,68,0.28);
+        }
+
+
+        .status-badge.sold
+        .status-dot {
+
+            background:
+                #ef4444;
+
+            box-shadow:
+                0 0 8px
+                rgba(239,68,68,0.8);
+        }
+
+
+        /* =====================================================
+           STATUS BUTTONS
+        ===================================================== */
+
+        .status-buttons {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
 
             gap: 8px;
-
-            flex-wrap: wrap;
-
-            margin-top: 15px;
         }
 
 
-        /*
-           IMPORTANT:
-
-           These are FORMS, not <a href> links.
-
-           Flask expects POST requests.
-        */
-
-        .action-form {
+        .status-buttons form {
 
             margin: 0;
         }
 
 
-        .btn {
+        .status-btn {
+
+            width: 100%;
+
+            min-height: 40px;
+
+            padding:
+                9px 8px;
+
+            border-radius: 9px;
+
+            color: white;
+
+            font-size: 12px;
+
+            font-weight: 700;
 
             border: none;
 
             cursor: pointer;
 
-            padding:
-                10px 14px;
-
-            border-radius: 10px;
-
-            color: white;
-
-            font-weight: 700;
-
-            font-size: 13px;
-
-            transition: 0.25s;
+            transition:
+                0.2s;
         }
 
 
-        .btn:hover {
+        .status-btn:hover {
 
             transform:
                 translateY(-2px);
         }
 
+
+        /* AVAILABLE */
 
         .available-btn {
 
@@ -490,12 +813,30 @@
         }
 
 
+        .available-btn:hover {
+
+            background:
+                #15803d;
+        }
+
+
+        /* RESERVED */
+
         .reserved-btn {
 
             background:
                 #d97706;
         }
 
+
+        .reserved-btn:hover {
+
+            background:
+                #b45309;
+        }
+
+
+        /* SOLD */
 
         .sold-btn {
 
@@ -504,47 +845,371 @@
         }
 
 
-        .delete-btn {
+        .sold-btn:hover {
 
             background:
-                #7f1d1d;
+                #b91c1c;
+        }
+
+
+        /* CURRENT STATUS */
+
+        .current-status {
+
+            opacity:
+                0.45;
+
+            cursor:
+                default;
+
+            transform:
+                none !important;
+        }
+
+
+        /* =====================================================
+           CARD ACTIONS
+        ===================================================== */
+
+        .card-actions {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 10px;
+
+            margin-top: 15px;
         }
 
 
         .view-btn {
 
-            display: inline-block;
+            display: flex;
 
-            text-decoration: none;
+            align-items: center;
 
-            background:
-                #2563eb;
-
-            color: white;
+            justify-content: center;
 
             padding:
-                10px 14px;
+                11px;
 
             border-radius: 10px;
+
+            background:
+                rgba(37,99,235,0.16);
+
+            border:
+                1px solid
+                rgba(96,165,250,0.25);
+
+            color:
+                #bfdbfe;
+
+            text-decoration: none;
 
             font-size: 13px;
 
             font-weight: 700;
 
-            transition: 0.25s;
+            transition:
+                0.2s;
         }
 
 
         .view-btn:hover {
 
-            transform:
-                translateY(-2px);
+            background:
+                #2563eb;
+
+            color: white;
         }
 
 
-        /* =========================
+        .delete-btn {
+
+            width: 100%;
+
+            padding:
+                11px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(239,68,68,0.08);
+
+            border:
+                1px solid
+                rgba(239,68,68,0.28);
+
+            color:
+                #fca5a5;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                0.2s;
+        }
+
+
+        .delete-btn:hover {
+
+            background:
+                #dc2626;
+
+            border-color:
+                #dc2626;
+
+            color: white;
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        /* =====================================================
+           CREATED DATE
+        ===================================================== */
+
+        .created-date {
+
+            margin-top: 15px;
+
+            padding-top: 13px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.10);
+
+            color:
+                rgba(255,255,255,0.42);
+
+            font-size: 12px;
+
+            text-align: center;
+        }
+
+
+        /* =====================================================
+           ADD LISTING FLOATING BUTTON
+        ===================================================== */
+
+        .add-listing {
+
+            position: fixed;
+
+            right: 28px;
+
+            bottom: 28px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding:
+                14px 20px;
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #0ea5e9
+                );
+
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: 800;
+
+            box-shadow:
+                0 12px 30px
+                rgba(0,0,0,0.30);
+
+            transition:
+                0.25s;
+
+            z-index: 50;
+        }
+
+
+        .add-listing:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 16px 35px
+                rgba(0,0,0,0.38);
+        }
+
+
+        /* =====================================================
+           DELETE CONFIRMATION MODAL
+        ===================================================== */
+
+        .delete-modal {
+
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(0,0,0,0.72);
+
+            backdrop-filter:
+                blur(7px);
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            z-index: 1000;
+        }
+
+
+        .delete-modal.active {
+
+            display: flex;
+        }
+
+
+        .modal-box {
+
+            width: 100%;
+
+            max-width: 430px;
+
+            padding: 28px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(20,35,48,0.97);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.16);
+
+            box-shadow:
+                0 25px 70px
+                rgba(0,0,0,0.50);
+
+            text-align: center;
+        }
+
+
+        .modal-icon {
+
+            font-size: 45px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .modal-box h2 {
+
+            font-size: 23px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .modal-box p {
+
+            color:
+                rgba(255,255,255,0.62);
+
+            line-height: 1.5;
+
+            margin-bottom: 22px;
+        }
+
+
+        .modal-actions {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 10px;
+        }
+
+
+        .cancel-btn {
+
+            padding:
+                12px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.15);
+
+            color: white;
+
+            cursor: pointer;
+
+            font-weight: 700;
+        }
+
+
+        .cancel-btn:hover {
+
+            background:
+                rgba(255,255,255,0.15);
+        }
+
+
+        .confirm-delete-btn {
+
+            padding:
+                12px;
+
+            border-radius: 10px;
+
+            background:
+                #dc2626;
+
+            border:
+                none;
+
+            color: white;
+
+            cursor: pointer;
+
+            font-weight: 700;
+        }
+
+
+        .confirm-delete-btn:hover {
+
+            background:
+                #b91c1c;
+        }
+
+
+        /* =====================================================
            MOBILE
-        ========================= */
+        ===================================================== */
 
         @media (max-width: 700px) {
 
@@ -555,19 +1220,28 @@
 
                 align-items:
                     flex-start;
+
+                flex-direction:
+                    column;
             }
 
 
             .logo {
 
-                font-size: 21px;
+                font-size: 22px;
             }
 
 
-            .nav-btn {
+            .nav-right {
+
+                width: 100%;
+            }
+
+
+            .nav-right a {
 
                 padding:
-                    8px 10px;
+                    8px 11px;
 
                 font-size: 12px;
             }
@@ -577,7 +1251,8 @@
 
                 width: 94%;
 
-                margin-top: 25px;
+                margin-top:
+                    25px;
             }
 
 
@@ -587,24 +1262,37 @@
             }
 
 
-            .details {
+            .listings-grid {
 
-                grid-template-columns: 1fr;
+                grid-template-columns:
+                    1fr;
             }
 
 
-            .btn,
-            .view-btn {
+            .status-buttons {
 
-                width: 100%;
-
-                text-align: center;
+                grid-template-columns:
+                    1fr;
             }
 
 
-            .action-form {
+            .card-actions {
 
-                width: 100%;
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .add-listing {
+
+                right: 18px;
+
+                bottom: 18px;
+
+                padding:
+                    12px 17px;
+
+                font-size: 13px;
             }
 
         }
@@ -617,61 +1305,66 @@
 <body>
 
 
-<!-- =====================================================
+<!-- =========================================================
      NAVBAR
-===================================================== -->
+========================================================= -->
 
-<nav class="navbar">
+<div class="navbar">
+
 
     <div class="logo">
+
         🏡 SmartPlot
+
     </div>
 
 
-    <div class="nav-buttons">
+    <div class="nav-right">
 
-        <a
-            href="{{ url_for('dashboard') }}"
-            class="nav-btn"
-        >
+        <a href="{{ url_for('dashboard') }}">
             Dashboard
         </a>
 
 
-        <a
-            href="{{ url_for('add_plot') }}"
-            class="nav-btn"
-        >
-            ➕ Add Plot
+        <a href="{{ url_for('my_listings') }}">
+            🏠 My Listings
         </a>
 
 
-        <a
-            href="{{ url_for('inquiries') }}"
-            class="nav-btn"
-        >
+        <a href="{{ url_for('seller_statistics') }}">
+            📊 Statistics
+        </a>
+
+
+        <a href="{{ url_for('inquiries') }}">
             🔔 Inquiries
         </a>
 
 
-        <a
-            href="{{ url_for('logout') }}"
-            class="nav-btn"
-        >
+        <a href="{{ url_for('logout') }}">
             Logout
         </a>
 
     </div>
 
-</nav>
+</div>
 
 
 
-<!-- =====================================================
+<!-- =========================================================
      MAIN
-===================================================== -->
+========================================================= -->
 
-<main class="container">
+<div class="container">
+
+
+    <a
+        href="{{ url_for('dashboard') }}"
+        class="back"
+    >
+        ← Back to Dashboard
+    </a>
+
 
 
     <div class="page-header">
@@ -681,55 +1374,77 @@
         </h1>
 
         <p>
-            Manage the plots you have published
-            on SmartPlot.
+            Manage your property listings,
+            update availability and respond to
+            buyer interest.
         </p>
 
     </div>
 
 
 
-    <!-- ADD PLOT -->
+    <!-- =====================================================
+         FLASH MESSAGES
+    ===================================================== -->
 
-    <div class="top-actions">
+    {% with messages = get_flashed_messages(
+        with_categories=true
+    ) %}
 
-        <a
-            href="{{ url_for('add_plot') }}"
-            class="add-btn"
-        >
-            ➕ Publish New Plot
-        </a>
+        {% if messages %}
 
-    </div>
+            <div class="flash-container">
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="flash {{ category }}"
+                    >
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
 
 
 
-    <!-- =================================================
+    <!-- =====================================================
          NO LISTINGS
-    ================================================= -->
+    ===================================================== -->
 
     {% if not plots %}
 
-        <div class="empty">
+        <div class="empty-card">
 
             <div class="empty-icon">
                 🏡
             </div>
 
+
             <h2>
-                No plots listed yet
+                No listings yet
             </h2>
 
+
             <p>
-                Publish your first property
-                on SmartPlot.
+                You haven't published any plots.
+                Add your first property to start
+                receiving buyer inquiries.
             </p>
+
 
             <a
                 href="{{ url_for('add_plot') }}"
-                class="add-btn"
+                class="add-first-btn"
             >
-                ➕ Add Your First Plot
+                + Add Your First Plot
             </a>
 
         </div>
@@ -742,250 +1457,432 @@
              LISTINGS
         ================================================= -->
 
-        <div class="listings">
+        <div class="listings-grid">
 
 
             {% for plot in plots %}
 
-                <div class="card">
+
+                <div class="listing-card">
 
 
-                    <h2>
-                        {{ plot["title"] }}
-                    </h2>
+                    <!-- =====================================
+                         IMAGE
+                    ====================================== -->
+
+                    {% set image = namespace(
+                        filename=None
+                    ) %}
 
 
-                    <div class="location">
-                        📍 {{ plot["location"] }}
-                    </div>
+                    {% if plot_images is defined %}
 
+                        {% for item in plot_images %}
 
+                            {% if item["plot_id"] == plot["id"] %}
 
-                    <!-- STATUS -->
+                                {% if image.filename is none %}
 
-                    <div
-                        class="status
-                        {{ plot['status'] }}"
-                    >
-                        {{ plot["status"] }}
-                    </div>
-
-
-
-                    <!-- DETAILS -->
-
-                    <div class="details">
-
-
-                        <div class="detail">
-
-                            <div class="detail-label">
-                                Plot Area
-                            </div>
-
-                            <div class="detail-value">
-
-                                {{ "{:,.0f}".format(
-                                    plot["area"] or 0
-                                ) }}
-
-                                sq.ft
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="detail">
-
-                            <div class="detail-label">
-                                Property Type
-                            </div>
-
-                            <div class="detail-value">
-
-                                {{ plot["property_type"]
-                                   or "Not provided" }}
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="detail">
-
-                            <div class="detail-label">
-                                Facing
-                            </div>
-
-                            <div class="detail-value">
-
-                                {{ plot["facing"]
-                                   or "Not provided" }}
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="detail">
-
-                            <div class="detail-label">
-                                Road Width
-                            </div>
-
-                            <div class="detail-value">
-
-                                {% if plot["road_width"] %}
-
-                                    {{ plot["road_width"] }}
-                                    ft
-
-                                {% else %}
-
-                                    Not provided
+                                    {% set image.filename =
+                                        item["filename"]
+                                    %}
 
                                 {% endif %}
 
+                            {% endif %}
+
+                        {% endfor %}
+
+                    {% endif %}
+
+
+                    {% if image.filename %}
+
+                        <img
+                            src="{{ url_for(
+                                'uploaded_plot_image',
+                                filename=image.filename
+                            ) }}"
+                            alt="{{ plot['title'] }}"
+                            class="listing-image"
+                        >
+
+                    {% else %}
+
+                        <div class="no-image">
+
+                            🏡
+                            &nbsp;
+                            No Photo Available
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    <!-- =====================================
+                         CONTENT
+                    ====================================== -->
+
+                    <div class="listing-content">
+
+
+                        <div class="listing-title">
+
+                            {{ plot["title"] }}
+
+                        </div>
+
+
+                        <div class="listing-location">
+
+                            📍 {{ plot["location"] }}
+
+                        </div>
+
+
+
+                        <!-- PRICE -->
+
+                        <div class="listing-price">
+
+                            ₹{{ "{:,.0f}".format(
+                                plot["price"] or 0
+                            ) }}
+
+                        </div>
+
+
+                        <div class="price-label">
+
+                            {% if plot["area"] %}
+
+                                ₹{{ "{:,.2f}".format(
+                                    (
+                                        plot["price"]
+                                        / plot["area"]
+                                    )
+                                ) }}
+
+                                per sq.ft
+
+                            {% else %}
+
+                                Price per sq.ft unavailable
+
+                            {% endif %}
+
+                        </div>
+
+
+
+                        <!-- =================================
+                             DETAILS
+                        ================================== -->
+
+                        <div class="details-grid">
+
+
+                            <div class="detail-box">
+
+                                <div class="detail-label">
+                                    Area
+                                </div>
+
+                                <div class="detail-value">
+
+                                    {{ "{:,.0f}".format(
+                                        plot["area"] or 0
+                                    ) }}
+
+                                    sq.ft
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="detail-box">
+
+                                <div class="detail-label">
+                                    Type
+                                </div>
+
+                                <div class="detail-value">
+
+                                    {{ plot["property_type"]
+                                       or "Not provided" }}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="detail-box">
+
+                                <div class="detail-label">
+                                    Facing
+                                </div>
+
+                                <div class="detail-value">
+
+                                    {{ plot["facing"]
+                                       or "Not provided" }}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="detail-box">
+
+                                <div class="detail-label">
+                                    Road
+                                </div>
+
+                                <div class="detail-value">
+
+                                    {% if plot["road_width"] %}
+
+                                        {{ plot["road_width"] }}
+                                        ft
+
+                                    {% else %}
+
+                                        Not provided
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- =================================
+                             STATUS
+                        ================================== -->
+
+                        <div class="status-area">
+
+
+                            <div class="status-heading">
+
+                                Listing Status
+
+                            </div>
+
+
+                            {% if plot["status"] == "available" %}
+
+                                <div class="status-badge available">
+
+                                    <span
+                                        class="status-dot"
+                                    ></span>
+
+                                    Available
+
+                                </div>
+
+
+                            {% elif plot["status"] == "reserved" %}
+
+                                <div class="status-badge reserved">
+
+                                    <span
+                                        class="status-dot"
+                                    ></span>
+
+                                    Reserved
+
+                                </div>
+
+
+                            {% elif plot["status"] == "sold" %}
+
+                                <div class="status-badge sold">
+
+                                    <span
+                                        class="status-dot"
+                                    ></span>
+
+                                    Sold
+
+                                </div>
+
+                            {% endif %}
+
+
+
+                            <!-- STATUS BUTTONS -->
+
+                            <div class="status-buttons">
+
+
+                                <!-- AVAILABLE -->
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'update_status',
+                                        plot_id=plot['id'],
+                                        status='available'
+                                    ) }}"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="status-btn available-btn
+                                        {% if plot['status'] == 'available' %}
+                                            current-status
+                                        {% endif %}"
+                                        {% if plot['status'] == 'available' %}
+                                            disabled
+                                        {% endif %}
+                                    >
+
+                                        ✓ Available
+
+                                    </button>
+
+                                </form>
+
+
+
+                                <!-- RESERVED -->
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'update_status',
+                                        plot_id=plot['id'],
+                                        status='reserved'
+                                    ) }}"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="status-btn reserved-btn
+                                        {% if plot['status'] == 'reserved' %}
+                                            current-status
+                                        {% endif %}"
+                                        {% if plot['status'] == 'reserved' %}
+                                            disabled
+                                        {% endif %}
+                                    >
+
+                                        ⏳ Reserved
+
+                                    </button>
+
+                                </form>
+
+
+
+                                <!-- SOLD -->
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'update_status',
+                                        plot_id=plot['id'],
+                                        status='sold'
+                                    ) }}"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="status-btn sold-btn
+                                        {% if plot['status'] == 'sold' %}
+                                            current-status
+                                        {% endif %}"
+                                        {% if plot['status'] == 'sold' %}
+                                            disabled
+                                        {% endif %}
+                                    >
+
+                                        ✓ Sold
+
+                                    </button>
+
+                                </form>
+
+
                             </div>
 
                         </div>
 
 
-                    </div>
+
+                        <!-- =================================
+                             CARD ACTIONS
+                        ================================== -->
+
+                        <div class="card-actions">
+
+
+                            <!-- VIEW -->
+
+                            <a
+                                href="{{ url_for(
+                                    'plot_details',
+                                    plot_id=plot['id']
+                                ) }}"
+                                class="view-btn"
+                            >
+
+                                👁 View Listing
+
+                            </a>
 
 
 
-                    <!-- PRICE -->
-
-                    <div class="price">
-
-                        ₹{{ "{:,.0f}".format(
-                            plot["price"] or 0
-                        ) }}
-
-                    </div>
-
-
-
-                    <!-- ACTIONS -->
-
-                    <div class="actions">
-
-
-                        <!-- VIEW -->
-
-                        <a
-                            href="{{ url_for(
-                                'plot_details',
-                                plot_id=plot['id']
-                            ) }}"
-                            class="view-btn"
-                        >
-                            👁️ View
-                        </a>
-
-
-
-                        <!-- AVAILABLE -->
-
-                        <form
-                            method="POST"
-                            action="{{ url_for(
-                                'update_status',
-                                plot_id=plot['id'],
-                                status='available'
-                            ) }}"
-                            class="action-form"
-                        >
+                            <!-- DELETE -->
 
                             <button
-                                type="submit"
-                                class="btn available-btn"
+                                type="button"
+                                class="delete-btn"
+                                onclick="openDeleteModal(
+                                    {{ plot['id'] }},
+                                    '{{ plot['title']
+                                        | replace("'", "\\'") }}'
+                                )"
                             >
-                                ✅ Available
+
+                                🗑 Delete
+
                             </button>
 
-                        </form>
+
+                        </div>
 
 
 
-                        <!-- RESERVED -->
+                        <!-- =================================
+                             DATE
+                        ================================== -->
 
-                        <form
-                            method="POST"
-                            action="{{ url_for(
-                                'update_status',
-                                plot_id=plot['id'],
-                                status='reserved'
-                            ) }}"
-                            class="action-form"
-                        >
+                        {% if plot["created_at"] %}
 
-                            <button
-                                type="submit"
-                                class="btn reserved-btn"
-                            >
-                                🟠 Reserved
-                            </button>
+                            <div class="created-date">
 
-                        </form>
+                                Published:
+                                {{ plot["created_at"] }}
 
+                            </div>
 
-
-                        <!-- SOLD -->
-
-                        <form
-                            method="POST"
-                            action="{{ url_for(
-                                'update_status',
-                                plot_id=plot['id'],
-                                status='sold'
-                            ) }}"
-                            class="action-form"
-                        >
-
-                            <button
-                                type="submit"
-                                class="btn sold-btn"
-                            >
-                                🔴 Mark Sold
-                            </button>
-
-                        </form>
-
-
-
-                        <!-- DELETE -->
-
-                        <form
-                            method="POST"
-                            action="{{ url_for(
-                                'delete_plot',
-                                plot_id=plot['id']
-                            ) }}"
-                            class="action-form"
-                            onsubmit="
-                                return confirm(
-                                    'Are you sure you want to delete this plot?'
-                                );
-                            "
-                        >
-
-                            <button
-                                type="submit"
-                                class="btn delete-btn"
-                            >
-                                🗑️ Delete
-                            </button>
-
-                        </form>
+                        {% endif %}
 
 
                     </div>
-
 
                 </div>
+
 
             {% endfor %}
 
@@ -995,8 +1892,208 @@
 
     {% endif %}
 
+</div>
 
-</main>
+
+
+<!-- =========================================================
+     ADD LISTING BUTTON
+========================================================= -->
+
+<a
+    href="{{ url_for('add_plot') }}"
+    class="add-listing"
+>
+
+    <span>
+        ＋
+    </span>
+
+    Add Plot
+
+</a>
+
+
+
+<!-- =========================================================
+     DELETE MODAL
+========================================================= -->
+
+<div
+    class="delete-modal"
+    id="deleteModal"
+>
+
+
+    <div class="modal-box">
+
+
+        <div class="modal-icon">
+            🗑️
+        </div>
+
+
+        <h2>
+            Delete Listing?
+        </h2>
+
+
+        <p>
+
+            Are you sure you want to permanently
+            delete
+
+            <strong id="deletePlotName">
+                this listing
+            </strong>
+
+            ?
+
+            <br><br>
+
+            This action cannot be undone.
+
+        </p>
+
+
+
+        <div class="modal-actions">
+
+
+            <button
+                type="button"
+                class="cancel-btn"
+                onclick="closeDeleteModal()"
+            >
+
+                Cancel
+
+            </button>
+
+
+            <form
+                method="POST"
+                id="deleteForm"
+            >
+
+                <button
+                    type="submit"
+                    class="confirm-delete-btn"
+                >
+
+                    Delete
+
+                </button>
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+    function openDeleteModal(
+        plotId,
+        plotName
+    ) {
+
+        const modal =
+            document.getElementById(
+                "deleteModal"
+            );
+
+
+        const deleteForm =
+            document.getElementById(
+                "deleteForm"
+            );
+
+
+        const plotNameElement =
+            document.getElementById(
+                "deletePlotName"
+            );
+
+
+        deleteForm.action =
+            "/delete-plot/"
+            + plotId;
+
+
+        plotNameElement.textContent =
+            plotName;
+
+
+        modal.classList.add(
+            "active"
+        );
+
+    }
+
+
+    function closeDeleteModal() {
+
+        const modal =
+            document.getElementById(
+                "deleteModal"
+            );
+
+
+        modal.classList.remove(
+            "active"
+        );
+
+    }
+
+
+    /* Close when clicking outside */
+
+    document
+        .getElementById("deleteModal")
+        .addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target === this
+                ) {
+
+                    closeDeleteModal();
+
+                }
+
+            }
+        );
+
+
+    /* Close with Escape key */
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                closeDeleteModal();
+
+            }
+
+        }
+    );
+
+</script>
 
 
 </body>
