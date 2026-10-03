@@ -800,9 +800,9 @@ def forgot_password():
         )
 
 
-        # -------------------------------------------------
+        # =================================================
         # SEND OTP
-        # -------------------------------------------------
+        # =================================================
 
         if action == "send_otp":
 
@@ -884,6 +884,9 @@ def forgot_password():
             )
 
 
+            session["otp_verified"] = False
+
+
             print()
             print("=" * 55)
             print(
@@ -912,9 +915,9 @@ def forgot_password():
             )
 
 
-        # -------------------------------------------------
+        # =================================================
         # VERIFY OTP
-        # -------------------------------------------------
+        # =================================================
 
         if action == "verify_otp":
 
@@ -1006,9 +1009,9 @@ def forgot_password():
             )
 
 
-        # -------------------------------------------------
+        # =================================================
         # RESET PASSWORD
-        # -------------------------------------------------
+        # =================================================
 
         if action == "reset_password":
 
@@ -1307,10 +1310,6 @@ def dashboard():
 
 # =========================================================
 # SELLER STATISTICS
-#
-# THIS ROUTE MATCHES:
-#
-# url_for('seller_statistics')
 # =========================================================
 
 @app.route(
@@ -1326,10 +1325,6 @@ def seller_statistics():
     user_id = session["user_id"]
 
 
-    # -----------------------------------------------------
-    # TOTAL LISTINGS
-    # -----------------------------------------------------
-
     total_listings = conn.execute("""
         SELECT COUNT(*)
         FROM plots
@@ -1338,10 +1333,6 @@ def seller_statistics():
         user_id,
     )).fetchone()[0]
 
-
-    # -----------------------------------------------------
-    # AVAILABLE
-    # -----------------------------------------------------
 
     available_listings = conn.execute("""
         SELECT COUNT(*)
@@ -1353,10 +1344,6 @@ def seller_statistics():
     )).fetchone()[0]
 
 
-    # -----------------------------------------------------
-    # RESERVED
-    # -----------------------------------------------------
-
     reserved_listings = conn.execute("""
         SELECT COUNT(*)
         FROM plots
@@ -1366,10 +1353,6 @@ def seller_statistics():
         user_id,
     )).fetchone()[0]
 
-
-    # -----------------------------------------------------
-    # SOLD
-    # -----------------------------------------------------
 
     sold_listings = conn.execute("""
         SELECT COUNT(*)
@@ -1381,10 +1364,6 @@ def seller_statistics():
     )).fetchone()[0]
 
 
-    # -----------------------------------------------------
-    # INQUIRIES
-    # -----------------------------------------------------
-
     total_inquiries = conn.execute("""
         SELECT COUNT(*)
         FROM inquiries
@@ -1393,10 +1372,6 @@ def seller_statistics():
         user_id,
     )).fetchone()[0]
 
-
-    # -----------------------------------------------------
-    # NEW INQUIRIES
-    # -----------------------------------------------------
 
     new_inquiries = conn.execute("""
         SELECT COUNT(*)
@@ -1408,10 +1383,6 @@ def seller_statistics():
     )).fetchone()[0]
 
 
-    # -----------------------------------------------------
-    # READ INQUIRIES
-    # -----------------------------------------------------
-
     read_inquiries = conn.execute("""
         SELECT COUNT(*)
         FROM inquiries
@@ -1421,10 +1392,6 @@ def seller_statistics():
         user_id,
     )).fetchone()[0]
 
-
-    # -----------------------------------------------------
-    # FAVORITES
-    # -----------------------------------------------------
 
     total_favorites = conn.execute("""
         SELECT COUNT(*)
@@ -1436,10 +1403,6 @@ def seller_statistics():
         user_id,
     )).fetchone()[0]
 
-
-    # -----------------------------------------------------
-    # TOTAL PROPERTY VALUE
-    # -----------------------------------------------------
 
     total_property_value = conn.execute("""
         SELECT COALESCE(
@@ -1454,10 +1417,6 @@ def seller_statistics():
     )).fetchone()[0]
 
 
-    # -----------------------------------------------------
-    # AVERAGE PRICE
-    # -----------------------------------------------------
-
     average_price = conn.execute("""
         SELECT COALESCE(
             AVG(price),
@@ -1469,10 +1428,6 @@ def seller_statistics():
         user_id,
     )).fetchone()[0]
 
-
-    # -----------------------------------------------------
-    # RECENT LISTINGS
-    # -----------------------------------------------------
 
     recent_listings = conn.execute("""
         SELECT
@@ -2037,6 +1992,12 @@ def update_status(
     conn.close()
 
 
+    flash(
+        "Plot status updated successfully.",
+        "success"
+    )
+
+
     return redirect(
         url_for("my_listings")
     )
@@ -2066,6 +2027,34 @@ def delete_plot(plot_id):
     )).fetchall()
 
 
+    # Delete favorites
+    conn.execute("""
+        DELETE FROM favorites
+        WHERE plot_id = ?
+    """, (
+        plot_id,
+    ))
+
+
+    # Delete inquiries
+    conn.execute("""
+        DELETE FROM inquiries
+        WHERE plot_id = ?
+    """, (
+        plot_id,
+    ))
+
+
+    # Delete image records
+    conn.execute("""
+        DELETE FROM plot_images
+        WHERE plot_id = ?
+    """, (
+        plot_id,
+    ))
+
+
+    # Delete seller's own plot
     conn.execute("""
         DELETE FROM plots
         WHERE id = ?
@@ -2081,6 +2070,7 @@ def delete_plot(plot_id):
     conn.close()
 
 
+    # Delete physical files
     for image in images:
 
         image_path = os.path.join(
@@ -2089,15 +2079,11 @@ def delete_plot(plot_id):
         )
 
 
-        if os.path.exists(
-            image_path
-        ):
+        if os.path.exists(image_path):
 
             try:
 
-                os.remove(
-                    image_path
-                )
+                os.remove(image_path)
 
             except OSError:
 
@@ -2105,6 +2091,12 @@ def delete_plot(plot_id):
                     "Could not remove image: %s",
                     image_path
                 )
+
+
+    flash(
+        "Plot deleted successfully.",
+        "success"
+    )
 
 
     return redirect(
@@ -2786,6 +2778,7 @@ def send_inquiry(plot_id):
 
         conn.close()
 
+
         return redirect(
             url_for(
                 "plot_details",
@@ -2926,6 +2919,12 @@ def inquiry_read(inquiry_id):
     conn.close()
 
 
+    flash(
+        "Inquiry marked as read.",
+        "success"
+    )
+
+
     return redirect(
         url_for("inquiries")
     )
@@ -2995,8 +2994,17 @@ create_database()
 
 if __name__ == "__main__":
 
+    debug_mode = (
+        ENV == "development"
+        and os.environ.get(
+            "FLASK_DEBUG",
+            "0"
+        ) == "1"
+    )
+
+
     app.run(
-        debug=True,
+        debug=debug_mode,
         host="0.0.0.0",
         port=5000
     )
